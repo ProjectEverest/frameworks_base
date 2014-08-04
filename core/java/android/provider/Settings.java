@@ -7295,6 +7295,13 @@ public final class Settings {
         public static final String STATUSBAR_LEFT_PADDING = "statusbar_left_padding";
 
         /**
+         * Whether to scramble a pin unlock layout
+         * @hide
+         */
+        public static final String LOCKSCREEN_PIN_SCRAMBLE_LAYOUT =
+                "lockscreen_scramble_pin_layout";
+
+        /**
          * Statusbar right padding
          * @hide
          */
