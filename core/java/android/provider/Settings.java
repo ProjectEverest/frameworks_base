@@ -6737,7 +6737,13 @@ public final class Settings {
          * @hide
          */
         public static final String ENABLE_RIPPLE_EFFECT = "enable_ripple_effect";
-        
+
+        /**
+         * Switch for lockscreen media metadata
+         * @hide
+         */
+        public static final String LOCKSCREEN_MEDIA_METADATA = "lockscreen_media_metadata";
+
         /**
          * Defines the screen-off animation to display
          * @hide
