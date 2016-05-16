@@ -6610,6 +6610,24 @@ public final class Settings {
          * @hide
          */
         public static final String QS_TILE_SECONDARY_LABEL_SIZE = "qs_tile_secondary_label_size";
+        
+        /**
+         * Change quick settings tiles animation style
+         * @hide
+         */
+        public static final String QS_TILE_ANIMATION_STYLE = "qs_tile_animation_style";
+
+        /**
+         * Change quick settings tiles animation duration
+         * @hide
+         */
+        public static final String QS_TILE_ANIMATION_DURATION = "qs_tile_animation_duration";
+
+        /**
+         * Change quick settings tiles interpolator
+         * @hide
+         */
+        public static final String QS_TILE_ANIMATION_INTERPOLATOR = "qs_tile_animation_interpolator";
 
         /**
          * These are all public system settings
