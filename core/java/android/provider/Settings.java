@@ -7113,6 +7113,11 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_TOP_PADDING = "statusbar_top_padding";
+        
+        /**
+         * @hide
+         */
+        public static final String LOCK_HIDE_STATUS_BAR = "lockscreen_hide_status_bar";
 
         /**
          * Whether to use the custom quick unlock screen control
@@ -7284,6 +7289,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_RIGHT_PADDING);
             PRIVATE_SETTINGS.add(STATUSBAR_TOP_PADDING);
             PRIVATE_SETTINGS.add(NAVIGATION_BAR_IME_SPACE);
+            PRIVATE_SETTINGS.add(LOCK_HIDE_STATUS_BAR);
         }
 
         /**
