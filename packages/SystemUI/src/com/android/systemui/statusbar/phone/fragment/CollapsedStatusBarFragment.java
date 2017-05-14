@@ -160,6 +160,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     private ClockController mClockController;
     private boolean mShowSBClockBg;
+    private View mStatusBarLogo;
 
     private List<String> mBlockedIcons = new ArrayList<>();
     private Map<Startable, Startable.State> mStartableStates = new ArrayMap<>();
@@ -362,6 +363,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mClockView = mStatusBar.findViewById(R.id.clock);
         mCenterClockView = mStatusBar.findViewById(R.id.clock_center);
         mRightClockView = mStatusBar.findViewById(R.id.clock_right);
+        mStatusBarLogo = mStatusBar.findViewById(R.id.statusbar_logo);
         showEndSideContent(false);
         showClock(false);
         initOperatorName();
@@ -776,10 +778,12 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     public void hideNotificationIconArea(boolean animate) {
+        animateHide(mStatusBarLogo, animate);
         animateHide(mNotificationIconAreaInner, animate);
     }
 
     public void showNotificationIconArea(boolean animate) {
+        animateShow(mStatusBarLogo, animate);
         animateShow(mNotificationIconAreaInner, animate);
     }
 
