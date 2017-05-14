@@ -34,6 +34,7 @@ import android.provider.Settings.System;
 import android.util.ArrayMap;
 import android.text.TextUtils;
 
+import android.graphics.Color;
 import java.util.Map;
 
 /**
@@ -283,5 +284,10 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.AMBIENT_WAKE_GESTURES, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.STATUS_BAR_QUICK_QS_PULLDOWN, new InclusiveIntegerRangeValidator(0, 2));
         VALIDATORS.put(System.PROXIMITY_ON_WAKE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.STATUS_BAR_LOGO, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.STATUS_BAR_LOGO_POSITION, ANY_INTEGER_VALIDATOR);
+        VALIDATORS.put(System.STATUS_BAR_LOGO_STYLE, ANY_INTEGER_VALIDATOR);
+        VALIDATORS.put(System.STATUS_BAR_LOGO_COLOR, ANY_INTEGER_VALIDATOR);
+        VALIDATORS.put(System.STATUS_BAR_LOGO_COLOR_PICKER, ANY_INTEGER_VALIDATOR);
     }
 }
