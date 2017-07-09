@@ -179,4 +179,8 @@
     
      <!-- Device hardware keys -->
      <java-symbol type="integer" name="config_deviceHardwareWakeKeys" />
+    
+     <!-- Sensor block -->
+     <java-symbol type="array" name="config_blockPackagesSensorDrain" />
+
 </resources>
