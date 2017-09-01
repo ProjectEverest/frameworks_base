@@ -6937,6 +6937,13 @@ public final class Settings {
         public static final String NOTIFICATION_MATERIAL_DISMISS = "notification_material_dismiss";
 
         /**
+         * Change volume up and down handlign based on rotation
+         * @hide
+         */
+        @Readable
+        public static final String SWAP_VOLUME_BUTTONS = "swap_volume_buttons";
+        
+        /**
          * These are all public system settings
          *
          * @hide
