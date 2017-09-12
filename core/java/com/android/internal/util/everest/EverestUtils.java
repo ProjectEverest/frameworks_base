@@ -66,6 +66,8 @@ import android.view.WindowManagerGlobal;
 import android.text.format.Time;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.view.IWindowManager;
+import android.view.WindowManagerGlobal;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
@@ -86,6 +88,9 @@ import com.android.internal.util.ArrayUtils;
 import java.util.ArrayList;
 
 public class EverestUtils {
+
+    public static final String INTENT_SCREENSHOT = "action_handler_screenshot";
+    public static final String INTENT_REGION_SCREENSHOT = "action_handler_region_screenshot";
 
 	// Check if device is connected to Wi-Fi
     public static boolean isWiFiConnected(Context context) {
@@ -242,6 +247,15 @@ public class EverestUtils {
 
     public static void killForegroundApp() {
         FireActions.killForegroundApp();
+    }
+
+    public static void takeScreenshot(boolean full) {
+        IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+        try {
+            wm.sendCustomAction(new Intent(full? INTENT_SCREENSHOT : INTENT_REGION_SCREENSHOT));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void sendKeycode(int keycode) {
