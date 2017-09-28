@@ -27,9 +27,13 @@ import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -206,6 +210,9 @@ class StatusBarNotificationActivityStarter implements NotificationActivityStarte
         mUserTracker = userTracker;
 
         launchFullScreenIntentProvider.registerListener(entry -> launchFullScreenIntent(entry));
+
+        mNosSettingsObserver.observe();
+        mNosSettingsObserver.update();
     }
 
     /**
@@ -644,4 +651,36 @@ class StatusBarNotificationActivityStarter implements NotificationActivityStarte
         return true;
     }
 
+    Handler mHandler = new Handler();
+    private NosSettingsObserver mNosSettingsObserver = new NosSettingsObserver(mHandler);
+    private class NosSettingsObserver extends ContentObserver {
+        NosSettingsObserver(Handler handler) {
+            super(handler);
+        }
+         void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_STOPLIST_VALUES), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_BLACKLIST_VALUES), false, this);
+        }
+         @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+         public void update() {
+            setHeadsUpStoplist();
+            setHeadsUpBlacklist();
+        }
+    }
+
+    private void setHeadsUpStoplist() {
+        if (mNotificationInterruptStateProvider != null)
+            mNotificationInterruptStateProvider.setHeadsUpStoplist();
+    }
+
+    private void setHeadsUpBlacklist() {
+        if (mNotificationInterruptStateProvider != null)
+            mNotificationInterruptStateProvider.setHeadsUpBlacklist();
+    }
 }
