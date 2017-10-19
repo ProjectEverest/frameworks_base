@@ -20,4 +20,19 @@
 
     <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
     <string name="screenrecord_delete_description">Screen recording deleted</string>
+
+    <!-- Title of statusbar tuner -->
+    <string name="status_bar_icons">Status bar icons</string>
+
+    <!-- Name of the VPN status bar icon. -->
+    <string name="status_bar_vpn">VPN</string>
+
+     <!-- Name of the data saver status bar icon. -->
+     <string name="status_bar_data_saver">Data saver</string>
+
+    <!-- Name of the location status bar icon. -->
+    <string name="status_bar_location">Location</string>
+
+    <!-- Name of the microphone status bar icon. -->
+    <string name="status_bar_microphone">Microphone</string>
 </resources>
