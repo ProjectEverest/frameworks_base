@@ -23,6 +23,7 @@ import com.android.systemui.qs.tiles.CellularTile
 import com.android.systemui.qs.tiles.CompassTile
 import com.android.systemui.qs.tiles.DataSwitchTile
 import com.android.systemui.qs.tiles.HeadsUpTile
+import com.android.systemui.qs.tiles.LiveDisplayTile
 import com.android.systemui.qs.tiles.SmartPixelsTile
 import com.android.systemui.qs.tiles.ScreenshotTile
 import com.android.systemui.qs.tiles.PowerShareTile
@@ -73,6 +74,12 @@ interface EverestOSModule {
     @IntoMap
     @StringKey(HeadsUpTile.TILE_SPEC)
     fun bindHeadsUpTile(headsUpTile: HeadsUpTile): QSTileImpl<*>
+
+    /** Inject LiveDisplayTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(LiveDisplayTile.TILE_SPEC)
+    fun bindLiveDisplayTile(liveDisplayTile: LiveDisplayTile): QSTileImpl<*>
 
     /** Inject SmartPixelsTile into tileMap in QSModule */
     @Binds
