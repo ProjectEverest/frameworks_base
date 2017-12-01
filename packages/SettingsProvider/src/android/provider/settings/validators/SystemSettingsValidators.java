@@ -282,5 +282,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.AMBIENT_WAKE_GESTURES, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.STATUS_BAR_QUICK_QS_PULLDOWN, new InclusiveIntegerRangeValidator(0, 2));
+        VALIDATORS.put(System.PROXIMITY_ON_WAKE, BOOLEAN_VALIDATOR);
     }
 }
