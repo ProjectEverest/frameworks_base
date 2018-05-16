@@ -35,6 +35,7 @@ import com.android.systemui.qs.tiles.VpnTile
 import com.android.systemui.qs.tiles.VolumeTile
 import com.android.systemui.qs.tiles.WifiTile
 import com.android.systemui.qs.tiles.SleepModeTile
+import com.android.systemui.qs.tiles.ReadingModeTile
 import com.android.systemui.qs.tiles.RefreshRateTile
 
 import dagger.Binds
@@ -80,6 +81,12 @@ interface EverestOSModule {
     @IntoMap
     @StringKey(LiveDisplayTile.TILE_SPEC)
     fun bindLiveDisplayTile(liveDisplayTile: LiveDisplayTile): QSTileImpl<*>
+
+    /** Inject ReadingModeTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(ReadingModeTile.TILE_SPEC)
+    fun bindReadingModeTile(readingModeTile: ReadingModeTile): QSTileImpl<*>
 
     /** Inject SmartPixelsTile into tileMap in QSModule */
     @Binds

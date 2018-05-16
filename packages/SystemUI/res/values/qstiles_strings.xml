@@ -16,7 +16,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="quick_settings_extra_tiles" translatable="false">
-        caffeine,heads_up,sync,usb_tether,vpn,dataswitch,volume_panel,sound,compass,powershare,smartpixels,sleep_mode,refresh_rate,screenshot,soundsearch,livedisplay
+        caffeine,heads_up,sync,usb_tether,vpn,dataswitch,volume_panel,sound,compass,powershare,smartpixels,sleep_mode,refresh_rate,screenshot,soundsearch,livedisplay,reading_mode
     </string>
 
     <!-- Caffeine QS tile -->
@@ -68,6 +68,13 @@
     <string name="quick_settings_compass_SW">SW</string>
     <string name="quick_settings_compass_W">W</string>
     <string name="quick_settings_compass_NW">NW</string>
+
+    <!-- Reader mode QS tile -->
+    <string name="quick_settings_reading_mode">Reading mode</string>
+    <string name="accessibility_quick_settings_reading_mode_on">Reading mode on.</string>
+    <string name="accessibility_quick_settings_reading_mode_off">Reading mode off.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_on">Reading mode turned on.</string>
+    <string name="accessibility_quick_settings_reading_mode_changed_off">Reading mode turned off.</string>
 
     <!-- Smart Pixels QS Tile -->
     <string name="quick_settings_smart_pixels">Smart Pixels</string>
