@@ -197,4 +197,7 @@
 
       <!-- Screen off delay -->
      <java-symbol type="integer" name="config_screen_off_delay" />
+
+     <!-- Bootleg unneccesary gradient declaration | Just for our shishu bars -->
+     <java-symbol type="color" name="bootleg_accent_gradient_end_color" />
 </resources>
