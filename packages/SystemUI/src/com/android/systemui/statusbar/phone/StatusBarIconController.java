@@ -17,6 +17,7 @@ package com.android.systemui.statusbar.phone;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_ICON;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_MOBILE_NEW;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_WIFI_NEW;
+import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_NETWORK_TRAFFIC;
 
 import android.annotation.Nullable;
 import android.content.Context;
@@ -49,6 +50,7 @@ import com.android.systemui.statusbar.pipeline.wifi.ui.WifiUiAdapter;
 import com.android.systemui.statusbar.pipeline.wifi.ui.view.ModernStatusBarWifiView;
 import com.android.systemui.statusbar.pipeline.wifi.ui.viewmodel.LocationBasedWifiViewModel;
 import com.android.systemui.util.Assert;
+import com.android.systemui.statusbar.policy.StatusBarNetworkTraffic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -423,6 +425,9 @@ public interface StatusBarIconController {
 
                 case TYPE_MOBILE_NEW:
                     return addNewMobileIcon(index, slot, holder.getTag());
+
+                case TYPE_NETWORK_TRAFFIC:
+                    return addNetworkTraffic(index, slot);
             }
 
             return null;
@@ -447,7 +452,12 @@ public interface StatusBarIconController {
 
             return view;
         }
-
+        
+        protected StatusBarNetworkTraffic addNetworkTraffic(int index, String slot) {
+            StatusBarNetworkTraffic view = onCreateNetworkTraffic(slot);
+            mGroup.addView(view, index, onCreateLayoutParams());
+            return view;
+        }
 
         protected StatusIconDisplayable addNewMobileIcon(
                 int index,
@@ -487,6 +497,11 @@ public interface StatusBarIconController {
                             slot,
                             mMobileIconsViewModel.viewModelForSub(subId, mLocation)
                         );
+        }
+
+        private StatusBarNetworkTraffic onCreateNetworkTraffic(String slot) {
+            StatusBarNetworkTraffic view = new StatusBarNetworkTraffic(mContext);
+            return view;
         }
 
         protected LinearLayout.LayoutParams onCreateLayoutParams() {
