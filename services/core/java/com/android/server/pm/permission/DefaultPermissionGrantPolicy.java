@@ -946,6 +946,10 @@ final class DefaultPermissionGrantPolicy {
         grantSystemFixedPermissionsToSystemPackage(pm,
                 getDefaultProviderAuthorityPackage("com.oneplus.camera", userId),
                 userId, WRITE_PERMISSIONS);
+        // Mediascanner
+        grantSystemFixedPermissionsToSystemPackage(pm,
+                getDefaultProviderAuthorityPackage("com.android.providers.media.MediaProvider", userId), userId,
+                STORAGE_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(PackageManagerWrapper pm,
