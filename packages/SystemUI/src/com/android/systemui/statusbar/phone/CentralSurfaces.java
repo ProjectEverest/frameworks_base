@@ -198,6 +198,8 @@ public interface CentralSurfaces extends Dumpable, LifecycleOwner {
 
     void onKeyguardViewManagerStatesUpdated();
 
+    void toggleSettingsPanel();
+
     /** */
     boolean getCommandQueuePanelsEnabled();
 
