@@ -7474,6 +7474,12 @@ public final class Settings {
         public static final String STATUSBAR_TOP_PADDING = "statusbar_top_padding";
         
         /**
+         * Whether to show charging animation
+         * @hide
+         */
+        public static final String CHARGING_ANIMATION = "charging_animation";
+
+        /**
          * @hide
          */
         public static final String LOCK_HIDE_STATUS_BAR = "lockscreen_hide_status_bar";
