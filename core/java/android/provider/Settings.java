@@ -7273,6 +7273,18 @@ public final class Settings {
           * @hide
           **/
         public static final String QS_HEADER_IMAGE_URI = "qs_header_image_uri";
+        
+        /**
+         * Which Vibration Pattern to use
+         * 0: dzzz-dzzz
+         * 1: dzzz-da
+         * 2: mm-mm-mm
+         * 3: da-da-dzzz
+         * 4: da-dzzz-da
+         * @hide
+         */
+        @Readable
+        public static final String RINGTONE_VIBRATION_PATTERN = "ringtone_vibration_pattern";
 
         /**
          * Clock font size QS
