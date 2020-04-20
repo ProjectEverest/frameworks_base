@@ -208,6 +208,7 @@ android_library {
         "motion_tool_lib",
         "notification_flags_lib",
         "guava",
+        "vendor.lineage.powershare-V1.0-java",
     ],
     libs: [
         "keepanno-annotations",
@@ -335,6 +336,7 @@ android_library {
         "flag-junit",
         "platform-test-annotations",
         "notification_flags_lib",
+        "vendor.lineage.powershare-V1.0-java",
     ],
 }
 

@@ -25,6 +25,7 @@ import com.android.systemui.qs.tiles.DataSwitchTile
 import com.android.systemui.qs.tiles.HeadsUpTile
 import com.android.systemui.qs.tiles.SmartPixelsTile
 import com.android.systemui.qs.tiles.ScreenshotTile
+import com.android.systemui.qs.tiles.PowerShareTile
 import com.android.systemui.qs.tiles.SoundTile
 import com.android.systemui.qs.tiles.SoundSearchTile
 import com.android.systemui.qs.tiles.SyncTile
@@ -84,6 +85,12 @@ interface EverestOSModule {
     @IntoMap
     @StringKey(ScreenshotTile.TILE_SPEC)
     fun bindScreenshotTile(screenshotTile: ScreenshotTile): QSTileImpl<*>
+
+    /** Inject PowerShareTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(PowerShareTile.TILE_SPEC)
+    fun bindPowerShareTile(powerShareTile: PowerShareTile): QSTileImpl<*>
 
     /** Inject SoundTile into tileMap in QSModule */
     @Binds
