@@ -196,6 +196,7 @@ import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.hardware.SystemSensorManager;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
@@ -811,6 +812,8 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
 
     private CutoutFullscreenController mCutoutFullscreenController;
 
+    private SystemSensorManager mSystemSensorManager;
+
     private final class SettingObserver extends ContentObserver {
         private final Uri mFontScaleUri = Settings.System.getUriFor(FONT_SCALE);
         private final Uri mHideErrorDialogsUri = Settings.Global.getUriFor(HIDE_ERROR_DIALOGS);
@@ -917,6 +920,9 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
 
         // Force full screen for devices with cutout
         mCutoutFullscreenController = new CutoutFullscreenController(mContext);
+
+        // Block sensor usage per app
+        mSystemSensorManager = new SystemSensorManager(mContext, mContext.getMainLooper());
     }
 
     public void retrieveSettings(ContentResolver resolver) {
@@ -6365,6 +6371,9 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                 mAppWarnings.onPackageUninstalled(name);
                 mCompatModePackages.handlePackageUninstalledLocked(name);
                 mPackageConfigPersister.onPackageUninstall(name, userId);
+                if (mSystemSensorManager != null) {
+                   mSystemSensorManager.notePackageUninstalled(name);
+                }
             }
         }
 
