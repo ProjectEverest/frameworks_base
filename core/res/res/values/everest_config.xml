@@ -99,4 +99,16 @@
 
     <!-- Whether key handler sends intent when changing slider position -->
     <string name="config_alertSliderIntent"></string>
+
+    <!-- Defines the sysfs attribute path used by the device
+         to enable/disable DC dimming. -->
+    <string name="config_deviceDcDimmingSysfsNode"></string>
+
+    <!-- Defines the value used by the device sysfs node
+         to enable DC dimming -->
+    <string name="config_deviceDcDimmingEnableValue">1</string>
+
+    <!-- Defines the value used by the device sysfs node
+         to disable DC dimming -->
+    <string name="config_deviceDcDimmingDisableValue">0</string>
 </resources>
