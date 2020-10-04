@@ -6854,6 +6854,13 @@ public final class Settings {
         public static final String SCREEN_OFF_ANIMATION = "screen_off_animation";
 
         /**
+         * Gesture navbar length mode.
+         * Supported modes: 0 for short length, 1 for normal and 2 for long.
+         * @hide
+         */
+        public static final String GESTURE_NAVBAR_LENGTH_MODE = "gesture_navbar_length_mode";
+
+        /**
          * These are all public system settings
          *
          * @hide

@@ -78,4 +78,8 @@
 
      <!-- Base Multiplier for dp to px. -->
     <dimen name="amb_font_base_multiplier_dp">1dp</dimen>
+    
+     <!-- Additional gesture navbar lengths -->
+     <dimen name="navigation_home_handle_width_short">72dp</dimen>
+     <dimen name="navigation_home_handle_width_long">140dp</dimen>
 </resources>
