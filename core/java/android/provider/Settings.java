@@ -7161,6 +7161,13 @@ public final class Settings {
         public static final String QS_HEADER_CLOCK_SIZE = "qs_header_clock_size";
 
         /**
+         * Gesture navbar length mode.
+         * Supported modes: 0 for short length, 1 for normal and 2 for long.
+         * @hide
+         */
+        public static final String GESTURE_NAVBAR_LENGTH_MODE = "gesture_navbar_length_mode";
+
+        /**
          * Statusbar left padding
          * @hide
          */
