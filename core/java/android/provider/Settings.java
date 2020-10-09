@@ -6933,7 +6933,13 @@ public final class Settings {
          */
         @Readable
         public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
-        
+
+        /**
+         * Whether to show material Dismiss All Button for notifications
+         * @hide
+         */
+        public static final String NOTIFICATION_MATERIAL_DISMISS = "notification_material_dismiss";
+
         /**
          * These are all public system settings
          *
