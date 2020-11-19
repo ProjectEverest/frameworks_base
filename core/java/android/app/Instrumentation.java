@@ -61,6 +61,8 @@ import android.view.Window;
 import android.view.WindowManagerGlobal;
 
 import com.android.internal.content.ReferrerIntent;
+import com.android.internal.util.everest.PixelPropsUtils;
+import com.android.internal.util.everest.GamesPropsUtils;
 
 import java.io.File;
 import java.lang.annotation.Retention;
@@ -1347,6 +1349,8 @@ public class Instrumentation {
                 .instantiateApplication(cl, className);
         app.attach(context);
         MeizuPropsUtils.setProps(app);
+        PixelPropsUtils.setProps(app);
+        GamesPropsUtils.setProps(app);
         return app;
     }
     
@@ -1365,6 +1369,8 @@ public class Instrumentation {
         Application app = (Application)clazz.newInstance();
         app.attach(context);
         MeizuPropsUtils.setProps(app);
+        PixelPropsUtils.setProps(app);
+        GamesPropsUtils.setProps(app);
         return app;
     }
 
