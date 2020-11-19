@@ -177,4 +177,7 @@
         <item>com.android.contacts</item>
         <item>com.android.documentsui</item>
     </string-array>
+
+    <!-- Whether Pixel props is enabled -->
+    <bool name="config_enablePixelProps">true</bool>
 </resources>

@@ -106,4 +106,7 @@
     <!-- App lock -->
     <java-symbol type="string" name="unlock_application" />
     <java-symbol type="array" name="config_appLockAllowedSystemApps" />
+
+    <!-- Whether Pixel props is enabled -->
+    <java-symbol type="bool" name="config_enablePixelProps" />
 </resources>
