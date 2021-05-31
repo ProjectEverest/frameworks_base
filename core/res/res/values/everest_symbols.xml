@@ -203,4 +203,13 @@
 
      <!-- Default line spacing multiplier between hours and minutes of the keyguard clock-->
      <java-symbol type="dimen" format="float" name="keyguard_clock_line_spacing_scale" />
+
+     <!-- Sleep Mode -->
+     <java-symbol type="drawable" name="ic_sleep" />
+     <java-symbol type="string" name="notification_channel_sleep" />
+     <java-symbol type="string" name="sleep_mode_notification_title" />
+     <java-symbol type="string" name="sleep_mode_notification_content" />
+     <java-symbol type="string" name="sleep_mode_enabled_toast" />
+     <java-symbol type="string" name="sleep_mode_disabled_toast" />
+
 </resources>
