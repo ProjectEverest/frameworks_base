@@ -154,6 +154,14 @@
     <!-- Ignore post running notifications for selected apps -->
     <java-symbol type="array" name="config_postNotificationIgnoredApps" />
     
+    <!-- Sleep Mode -->
+    <java-symbol type="drawable" name="ic_sleep" />
+    <java-symbol type="string" name="notification_channel_sleep" />
+    <java-symbol type="string" name="sleep_mode_notification_title" />
+    <java-symbol type="string" name="sleep_mode_notification_content" />
+    <java-symbol type="string" name="sleep_mode_enabled_toast" />
+    <java-symbol type="string" name="sleep_mode_disabled_toast" />
+
     <!-- Status bar paddings -->
     <java-symbol type="dimen" name="status_bar_padding_start" />
     <java-symbol type="dimen" name="status_bar_padding_end" />

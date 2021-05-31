@@ -191,6 +191,7 @@ import com.android.server.policy.PhoneWindowManager;
 import com.android.server.policy.role.RoleServicePlatformHelperImpl;
 import com.android.server.power.PowerManagerService;
 import com.android.server.power.ShutdownThread;
+import com.android.server.power.SleepModeService;
 import com.android.server.power.ThermalManagerService;
 import com.android.server.power.hint.HintManagerService;
 import com.android.server.powerstats.PowerStatsService;
@@ -434,6 +435,9 @@ public final class SystemServer implements Dumpable {
             "com.android.server.compat.overrides.AppCompatOverridesService$Lifecycle";
     private static final String HEALTHCONNECT_MANAGER_SERVICE_CLASS =
             "com.android.server.healthconnect.HealthConnectManagerService";
+    private static final String SLEEP_MODE_SERVICE_CLASS =
+            "com.android.server.power.SleepModeService";
+
     private static final String ROLE_SERVICE_CLASS = "com.android.role.RoleService";
     private static final String GAME_MANAGER_SERVICE_CLASS =
             "com.android.server.app.GameManagerService$Lifecycle";
@@ -2997,6 +3001,10 @@ public final class SystemServer implements Dumpable {
 
         t.traceBegin("AppCompatOverridesService");
         mSystemServiceManager.startService(APP_COMPAT_OVERRIDES_SERVICE_CLASS);
+        t.traceEnd();
+        
+        t.traceBegin("SleepModeService");
+        mSystemServiceManager.startService(SLEEP_MODE_SERVICE_CLASS);
         t.traceEnd();
 
         t.traceBegin("StartPocketLockService");
