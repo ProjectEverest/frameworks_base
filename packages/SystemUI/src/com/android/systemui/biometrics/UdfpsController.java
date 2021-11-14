@@ -34,9 +34,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.graphics.Rect;
 import android.hardware.biometrics.BiometricFingerprintConstants;
 import android.hardware.biometrics.SensorProperties;
+import android.hardware.display.AmbientDisplayConfiguration;
 import android.hardware.display.DisplayManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.hardware.fingerprint.FingerprintSensorProperties;
@@ -44,6 +46,7 @@ import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
 import android.hardware.fingerprint.IUdfpsOverlayController;
 import android.hardware.fingerprint.IUdfpsOverlayControllerCallback;
 import android.hardware.input.InputManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -52,6 +55,7 @@ import android.os.UserHandle;
 import android.os.VibrationAttributes;
 import android.os.VibrationEffect;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -225,6 +229,9 @@ public class UdfpsController implements DozeReceiver, Dumpable {
     private int[][] mBrightnessAlphaArray;
     private final int mUdfpsVendorCode;
 
+    private final AmbientDisplayConfiguration mAmbientDisplayConfiguration;
+    private boolean mScreenOffFod;
+
     @VisibleForTesting
     public static final VibrationAttributes UDFPS_VIBRATION_ATTRIBUTES =
             new VibrationAttributes.Builder()
@@ -341,18 +348,15 @@ public class UdfpsController implements DozeReceiver, Dumpable {
                 });
             } else {
                 boolean acquiredVendor = acquiredInfo == FINGERPRINT_ACQUIRED_VENDOR;
-                if (!acquiredVendor || (!mStatusBarStateController.isDozing() && mScreenOn)) {
-                    return;
-                }
-                if (vendorCode == mUdfpsVendorCode) {
-                    if (mContext.getResources().getBoolean(R.bool.config_pulseOnFingerDown)) {
-                        mContext.sendBroadcastAsUser(new Intent(PULSE_ACTION),
-                                new UserHandle(UserHandle.USER_CURRENT));
-                    } else {
+                final boolean isAodEnabled = mAmbientDisplayConfiguration.alwaysOnEnabled(UserHandle.USER_CURRENT);
+                final boolean isShowingAmbientDisplay = mStatusBarStateController.isDozing() && mScreenOn;
+
+                if (acquiredVendor && ((mScreenOffFod && !mScreenOn) || (isAodEnabled && isShowingAmbientDisplay))) {
+                    if (vendorCode == mUdfpsVendorCode) {
                         mPowerManager.wakeUp(mSystemClock.uptimeMillis(),
                                 PowerManager.WAKE_REASON_GESTURE, TAG);
+                        onAodInterrupt(0, 0, 0, 0);
                     }
-                    onAodInterrupt(0, 0, 0, 0);
                 }
             }
         }
@@ -777,8 +781,28 @@ public class UdfpsController implements DozeReceiver, Dumpable {
 
         udfpsHapticsSimulator.setUdfpsController(this);
         udfpsShell.setUdfpsOverlayController(mUdfpsOverlayController);
-
         mUdfpsVendorCode = mContext.getResources().getInteger(R.integer.config_udfpsVendorCode);
+
+        mAmbientDisplayConfiguration = new AmbientDisplayConfiguration(mContext);
+        boolean screenOffFodSupported = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_supportScreenOffUdfps) ||
+                !TextUtils.isEmpty(mContext.getResources().getString(
+                    com.android.internal.R.string.config_dozeUdfpsLongPressSensorType));
+        if (screenOffFodSupported) {
+            mScreenOffFod = mSecureSettings.getIntForUser(
+                Settings.Secure.SCREEN_OFF_UDFPS_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+            mSecureSettings.registerContentObserver(Settings.Secure.SCREEN_OFF_UDFPS_ENABLED,
+                new ContentObserver(mainHandler) {
+                    @Override
+                    public void onChange(boolean selfChange, Uri uri) {
+                        if (uri.getLastPathSegment().equals(Settings.Secure.SCREEN_OFF_UDFPS_ENABLED)) {
+                            mScreenOffFod = mSecureSettings.getIntForUser(
+                                Settings.Secure.SCREEN_OFF_UDFPS_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+                        }
+                    }
+                }
+            );
+        }
     }
 
     /**
