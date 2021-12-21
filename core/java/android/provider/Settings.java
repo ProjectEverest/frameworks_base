@@ -7346,6 +7346,16 @@ public final class Settings {
          * @hide
          */
         public static final String LOCK_HIDE_STATUS_BAR = "lockscreen_hide_status_bar";
+        
+        /**
+         * @hide
+         */
+        public static final String UDFPS_ANIM = "udfps_anim";
+
+        /**
+         * @hide
+         */
+        public static final String UDFPS_ANIM_STYLE = "udfps_anim_style";
 
         /**
          * Force full screen for devices with cutout
