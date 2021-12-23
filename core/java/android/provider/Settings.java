@@ -11797,6 +11797,13 @@ public final class Settings {
                 "nav_bar_button_swap_enabled";
 
         /**
+         * Whether to allow sensitive qs tiles on keyguard
+         * @hide
+         */
+        @Readable
+        public static final String QSTILE_REQUIRES_UNLOCKING = "qstile_requires_unlocking";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */
