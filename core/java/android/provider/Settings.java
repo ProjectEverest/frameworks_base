@@ -6637,6 +6637,14 @@ public final class Settings {
         public static final String PULSE_LIGHT_LAYOUT_STYLE = "pulse_light_layout_style";
 
         /**
+         * Arcane Idle Manager
+         * @hide
+         */
+        @Readable
+        public static final String ARCANE_IDLE_MANAGER = "arcane_idle_manager";
+
+
+        /**
          * Whether to enable Smart Pixels
          * @hide
          */
