@@ -1241,7 +1241,9 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver ,Tune
                                               marginTop,
                                               marginRight,
                                               marginBottom);
-                mBatteryIconView.setLayoutParams(scaledLayoutParams);
+                if (mBatteryIconView != null) {
+            		mBatteryIconView.setLayoutParams(scaledLayoutParams);
+        	}
             } else {
                 LinearLayout.LayoutParams scaledLayoutParams = new LinearLayout.LayoutParams(
                     (defaultWidth), (defaultHeight));
