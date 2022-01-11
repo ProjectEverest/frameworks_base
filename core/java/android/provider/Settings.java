@@ -7211,6 +7211,12 @@ public final class Settings {
           */
         public static final String QS_HEADER_SIZE = "qs_header_size";
 
+         /**
+         * Whether to disable qs on secure lockscreen.
+         * @hide
+         */
+        public static final String SECURE_LOCKSCREEN_QS_DISABLED = "secure_lockscreen_qs_disabled";
+
         /**
          * Give haptic feedback on brightness slider
          * @hide
