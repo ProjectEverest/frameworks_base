@@ -272,4 +272,7 @@
     <color name="shadow">#14000000</color>
     <color name="neumorph_outline_start">#FFBDBDBD</color>
     <color name="neumorph_outline_end">#FFF0F0F0</color>
+
+    <!-- Volume panel -->
+    <color name="volume_seekbar_bg">@android:color/system_accent2_100</color>
 </resources>
