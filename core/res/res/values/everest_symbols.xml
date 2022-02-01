@@ -164,4 +164,8 @@
          the sensor embedded in the power key and listening all the time
          causes a poor experience. -->
     <java-symbol type="bool" name="config_fingerprintWakeAndUnlock" />
+    
+    <!-- App lock -->
+    <java-symbol type="string" name="unlock_application" />
+    <java-symbol type="array" name="config_appLockAllowedSystemApps" />
 </resources>
