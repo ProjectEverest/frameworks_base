@@ -22,6 +22,7 @@ import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL;
 
 import android.annotation.Nullable;
 import android.app.ActivityManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ContentResolver;
 import android.content.om.IOverlayManager;
@@ -63,8 +64,9 @@ public class NavigationBarInflaterView extends FrameLayout implements TunerServi
     public static final String NAV_BAR_LEFT = "sysui_nav_bar_left";
     public static final String NAV_BAR_RIGHT = "sysui_nav_bar_right";
     public static final String NAV_BAR_INVERSE = "sysui_nav_bar_inverse";
-    public static final String NAV_BAR_COMPACT = "customsystem:" + Settings.System.NAV_BAR_COMPACT_LAYOUT;
-    private static final String GESTURE_NAVBAR_LENGTH_MODE = "customsystem:" + Settings.System.GESTURE_NAVBAR_LENGTH_MODE;
+    public static final String NAV_BAR_COMPACT = "system:" + Settings.System.NAV_BAR_COMPACT_LAYOUT;
+    private static final String GESTURE_NAVBAR_LENGTH_MODE = "system:" + Settings.System.GESTURE_NAVBAR_LENGTH_MODE;
+    private static final String GESTURE_NAVBAR_RADIUS = "system:" + Settings.System.GESTURE_NAVBAR_RADIUS;
 
     public static final String MENU_IME_ROTATE = "menu_ime";
     public static final String BACK = "back";
@@ -213,6 +215,7 @@ public class NavigationBarInflaterView extends FrameLayout implements TunerServi
         Dependency.get(TunerService.class).addTunable(this, NAV_BAR_COMPACT);
         Dependency.get(TunerService.class).addTunable(this, KEY_NAVIGATION_HINT);
         Dependency.get(TunerService.class).addTunable(this, GESTURE_NAVBAR_LENGTH_MODE);
+        Dependency.get(TunerService.class).addTunable(this, GESTURE_NAVBAR_RADIUS);
     }
 
     @Override
@@ -239,6 +242,8 @@ public class NavigationBarInflaterView extends FrameLayout implements TunerServi
             onLikelyDefaultLayoutChange();
         } else if (GESTURE_NAVBAR_LENGTH_MODE.equals(key)) {
             mHomeHandleWidthMode = TunerService.parseInteger(newValue, 1);
+            onLikelyDefaultLayoutChange();
+        } else if (GESTURE_NAVBAR_RADIUS.equals(key)) {
             onLikelyDefaultLayoutChange();
         }
         if (QuickStepContract.isGesturalMode(mNavBarMode)) {
