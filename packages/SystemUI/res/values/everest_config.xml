@@ -23,4 +23,8 @@
 
     <!-- Update battery info every second when device is charging -->
     <bool name="config_alternateFastchargeInfoUpdate">false</bool>
+
+    <!-- Udfps display mode provider class name -->
+    <string name="config_udfpsDisplayModeProviderComponent">
+         com.android.systemui.biometrics.DummyUdfpsDisplayModeProvider</string>
 </resources>
