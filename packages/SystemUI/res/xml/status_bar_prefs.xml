@@ -94,6 +94,11 @@
         android:icon="@drawable/ic_statusbar_data_saver" />
 
     <com.android.systemui.tuner.StatusBarSwitch
+        android:icon="@drawable/ic_statusbar_roaming"
+        android:key="roaming"
+        android:title="@string/status_bar_roaming" />
+
+    <com.android.systemui.tuner.StatusBarSwitch
         android:key="alarm_clock"
         android:title="@string/status_bar_alarm"
         android:icon="@drawable/ic_statusbar_alarm" />
