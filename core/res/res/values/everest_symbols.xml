@@ -151,4 +151,7 @@
     <java-symbol type="string" name="poweroff_alarm_title" />
     <java-symbol type="string" name="poweroff_alarm_body" />
     <java-symbol type="drawable" name="ic_alarm_on" />
+
+    <!-- Whether to allow network traffic on statusbar -->
+    <java-symbol type="bool" name="config_supportsNetworkTrafficOnStatusBar" />
 </resources>
