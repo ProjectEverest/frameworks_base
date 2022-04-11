@@ -6870,6 +6870,11 @@ public final class Settings {
         public static final String GESTURE_NAVBAR_RADIUS = "gesture_navbar_radius";
 
         /**
+         * @hide
+         */
+        public static final String ENABLE_TASKBAR = "enable_taskbar";
+
+        /**
          * These are all public system settings
          *
          * @hide
