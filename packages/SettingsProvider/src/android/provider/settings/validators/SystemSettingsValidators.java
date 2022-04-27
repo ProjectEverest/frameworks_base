@@ -294,5 +294,9 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.INCREASING_RING_START_VOLUME, new InclusiveFloatRangeValidator(0, 1));
         VALIDATORS.put(System.INCREASING_RING_RAMP_UP_TIME, new InclusiveFloatRangeValidator(5, 60));
         VALIDATORS.put(System.QS_PANEL_STYLE, NON_NEGATIVE_INTEGER_VALIDATOR);
+        VALIDATORS.put(System.QS_TILE_LABEL_HIDE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.QS_TILE_VERTICAL_LAYOUT, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.QS_LAYOUT, ANY_INTEGER_VALIDATOR);
+        VALIDATORS.put(System.QQS_LAYOUT, ANY_INTEGER_VALIDATOR);
     }
 }
