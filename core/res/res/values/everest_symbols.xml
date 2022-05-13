@@ -186,4 +186,8 @@
      <!-- Ignore post running notifications for selected apps -->
      <java-symbol type="array" name="config_postNotificationIgnoredApps" />
 
+     <!-- Status bar paddings -->
+     <java-symbol type="dimen" name="status_bar_padding_start" />
+     <java-symbol type="dimen" name="status_bar_padding_end" />
+     <java-symbol type="dimen" name="status_bar_padding_top" />
 </resources>
