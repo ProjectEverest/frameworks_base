@@ -168,4 +168,7 @@
     <!-- App lock -->
     <java-symbol type="string" name="unlock_application" />
     <java-symbol type="array" name="config_appLockAllowedSystemApps" />
+
+    <!-- Screen off delay -->
+    <java-symbol type="integer" name="config_screen_off_delay" />
 </resources>
