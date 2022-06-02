@@ -20,8 +20,8 @@
     <string name="reboot_message">Rebooting system</string>
 
     <!-- Settings Restart -->
-   <string name="settings_restart_title">Settings restart required</string>
-   <string name="settings_restart_message">For all changes to take effect, a Settings app restart is required. Restart Settings app now?</string>
+    <string name="settings_restart_title">Settings restart required</string>
+    <string name="settings_restart_message">For all changes to take effect, a Settings app restart is required. Restart Settings app now?</string>
 
     <!-- System Reboot -->
     <string name="system_restart_title">System restart required</string>
@@ -82,4 +82,7 @@
     <string name="sleep_mode_notification_content">Tap to turn off sleep mode</string>
     <string name="sleep_mode_enabled_toast">Sleep mode turned on</string>
     <string name="sleep_mode_disabled_toast">Sleep mode turned off</string>
+
+    <!-- Lock gesture -->
+    <string name="gesture_locked_warning">Swipe again to unlock gestures</string>
 </resources>
