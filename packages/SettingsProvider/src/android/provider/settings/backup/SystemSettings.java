@@ -122,6 +122,7 @@ public class SystemSettings {
         Settings.System.QS_TILE_SECONDARY_LABEL_SIZE,
         Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL,
         Settings.System.NETWORK_TRAFFIC_STATE,
-        Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD
+        Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD,
+        Settings.System.NAVIGATION_BAR_IME_SPACE,
     };
 }
