@@ -4,5 +4,6 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
-
+    <!-- Charging info current divider, if needed -->
+    <integer name="config_currentInfoDivider" translatable="false">1000</integer>
 </resources>
