@@ -186,8 +186,8 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
     private Runnable mOnDismissListener;
     private boolean mIncreasedSize;
     private boolean mShowsConversation;
-    private boolean mNewIconStyle;
     private boolean mShowNotificationCount;
+    private static boolean mNewIconStyle;
 
     public StatusBarIconView(Context context, String slot, StatusBarNotification sbn) {
         this(context, slot, sbn, false);
@@ -494,7 +494,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
      * @return Drawable for this item, or null if the package or item could not
      *         be found
      */
-    public Drawable getIcon(Context sysuiContext,
+    public static Drawable getIcon(Context sysuiContext,
             Context context, StatusBarIcon statusBarIcon) {
         int userId = statusBarIcon.user.getIdentifier();
         if (userId == UserHandle.USER_ALL) {
