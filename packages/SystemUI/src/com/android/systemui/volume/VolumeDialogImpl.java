@@ -2537,10 +2537,10 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
 
         final ColorStateList bgTint = useActiveColoring
                 ? Utils.getColorAttr(mContext, android.R.attr.colorBackgroundFloating)
-                : Utils.getColorAttr(mContext, com.android.internal.R.attr.textColorOnAccent);
-                
+                : Utils.getColorAttr(mContext, com.android.internal.R.attr.colorAccentCustom);
+
         final ColorStateList colorAccent = Utils.getColorAttr(
-                mContext, com.android.internal.R.attr.colorAccent);
+                mContext, com.android.internal.R.attr.colorAccentCustom);
 
         row.sliderProgressSolid.setTintList(colorTint);
         row.sliderProgressSolid.setAlpha(alpha);
