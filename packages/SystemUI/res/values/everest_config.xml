@@ -37,4 +37,7 @@
 
     <!-- Whether to enable HEVC toggle for screenrecord -->
     <bool name="config_screenRecordHEVC">true</bool>
+
+    <!-- Udfps vendor code -->
+    <integer name="config_udfpsVendorCode">0</integer>
 </resources>
