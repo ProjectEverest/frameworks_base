@@ -229,6 +229,7 @@ import com.android.server.twilight.TwilightService;
 import com.android.server.uri.UriGrantsManagerService;
 import com.android.server.usage.UsageStatsService;
 import com.android.server.utils.TimingsTraceAndSlog;
+import com.android.server.vibrator.LinearmotorVibratorService;
 import com.android.server.vibrator.VibratorManagerService;
 import com.android.server.vr.VrManagerService;
 import com.android.server.wearable.WearableSensingManagerService;
@@ -2682,6 +2683,10 @@ public final class SystemServer implements Dumpable {
             // CustomDeviceConfigService
             t.traceBegin("StartCustomDeviceConfigService");
             mSystemServiceManager.startService(CustomDeviceConfigService.class);
+            t.traceEnd();
+
+            t.traceBegin("StartLinearmotorVibratorService");
+            mSystemServiceManager.startService(LinearmotorVibratorService.class);
             t.traceEnd();
         }
 
