@@ -6449,6 +6449,12 @@ public final class Settings {
          */
         public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
 
+       /**
+         * Whether to settings custom transitions PageTileLayout
+         * @hide
+         */
+        public static final String CUSTOM_TRANSITIONS_KEY = "custom_transitions_page_tile";
+
         /**
          * Whether to enable smart 5G mode
          * @hide
