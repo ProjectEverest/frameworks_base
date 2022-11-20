@@ -59,6 +59,7 @@ import android.view.Window;
 import android.view.WindowManagerGlobal;
 
 import com.android.internal.content.ReferrerIntent;
+import com.android.internal.util.everest.GamesPropsUtils;
 import com.android.internal.util.everest.PixelPropsUtils;
 
 import java.io.File;
@@ -1286,6 +1287,7 @@ public class Instrumentation {
         app.attach(context);
         MeizuPropsUtils.setProps(app);
         PixelPropsUtils.setProps(app);
+        GamesPropsUtils.setProps(app);
         return app;
     }
     
@@ -1305,6 +1307,7 @@ public class Instrumentation {
         app.attach(context);
         MeizuPropsUtils.setProps(app);
         PixelPropsUtils.setProps(app);
+        GamesPropsUtils.setProps(app);
         return app;
     }
 
