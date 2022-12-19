@@ -176,4 +176,7 @@
     <string name="omnijaws_service_error">Error loading weather data</string>
     <string name="omnijaws_service_unknown">No weather data</string>
     <string name="omnijaws_label_default">Weather</string>
+
+    <!-- Screenshot Tile -->
+    <string name="screenshot_long_press">Long press - selected region</string>
 </resources>
