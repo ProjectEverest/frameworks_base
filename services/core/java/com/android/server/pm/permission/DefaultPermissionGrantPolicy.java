@@ -1128,6 +1128,10 @@ final class DefaultPermissionGrantPolicy {
         // Pixel Live Wallpapers
         grantSystemFixedPermissionsToSystemPackage(pm, "com.google.pixel.livewallpaper", userId,
                 ALWAYS_LOCATION_PERMISSIONS);
+
+        // OnePlus Gallery
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.oneplus.gallery", userId,
+                STORAGE_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(PackageManagerWrapper pm,
