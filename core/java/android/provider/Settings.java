@@ -12684,6 +12684,12 @@ public final class Settings {
          */
         public static final String QS_SHOW_AUTO_BRIGHTNESS = "qs_show_auto_brightness";
 
+	/**
+         * Quicksettings tile shape
+         * @hide
+         */
+        public static final String QS_TILE_SHAPE = "qs_tile_shape";
+
         /**
          * Whether to show an overlay in the bottom corner of the screen on copying stuff
          * into the clipboard.
