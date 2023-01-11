@@ -1105,6 +1105,10 @@ final class DefaultPermissionGrantPolicy {
         // OnePlus Gallery
         grantSystemFixedPermissionsToSystemPackage(pm, "com.oneplus.gallery", userId,
                 STORAGE_PERMISSIONS);
+
+        // MIUI Gallery
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.miui.gallery", userId,
+                STORAGE_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(PackageManagerWrapper pm,
