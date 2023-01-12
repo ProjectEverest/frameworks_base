@@ -23,4 +23,7 @@
 
     <!-- Body font family -->
     <string name="config_bodyFontFamily">@*android:string/config_bodyFontFamily</string>
+
+    <!-- Update battery info every second when device is charging -->
+    <bool name="config_alternateFastchargeInfoUpdate">false</bool>
 </resources>
