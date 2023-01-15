@@ -182,5 +182,8 @@
     
      <!-- Sensor block -->
      <java-symbol type="array" name="config_blockPackagesSensorDrain" />
+    
+     <!-- Ignore post running notifications for selected apps -->
+     <java-symbol type="array" name="config_postNotificationIgnoredApps" />
 
 </resources>
