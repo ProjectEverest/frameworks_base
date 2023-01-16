@@ -308,8 +308,10 @@ public class CpuPowerCalculator extends PowerCalculator {
                     }
                 }
             } else {
+		if (DEBUG) {
                 Log.w(TAG, "UID " + u.getUid() + " CPU cluster # mismatch: Power Profile # "
                         + mNumCpuClusters + " actual # " + cpuClusterTimes.length);
+		}
             }
         }
 
@@ -319,8 +321,10 @@ public class CpuPowerCalculator extends PowerCalculator {
                     powerMah += mPerCpuFreqPowerEstimators[i].calculatePower(cpuFreqTimes[i]);
                 }
             } else {
+                    if (DEBUG) {
                 Log.w(TAG, "UID " + u.getUid() + " CPU freq # mismatch: Power Profile # "
                         + mPerCpuFreqPowerEstimators.length + " actual # " + cpuFreqTimes.length);
+		    }
             }
         }
 
