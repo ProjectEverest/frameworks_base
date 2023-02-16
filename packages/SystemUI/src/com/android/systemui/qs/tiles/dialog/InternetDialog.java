@@ -500,16 +500,11 @@ public class InternetDialog extends SystemUIDialog implements
 
                 ImageView mSecondaryMobileSettingsIcon =
                         mDialogView.requireViewById(R.id.secondary_settings_icon);
-                mSecondaryMobileSettingsIcon.setColorFilter(
-                        mContext.getColor(R.color.connected_network_primary_color));
-
                 // set secondary visual for default data sub
                 mMobileNetworkLayout.setBackground(mBackgroundOff);
                 mMobileTitleText.setTextAppearance(R.style.TextAppearance_InternetDialog);
                 mMobileSummaryText.setTextAppearance(
                         R.style.TextAppearance_InternetDialog_Secondary);
-                mSignalIcon.setColorFilter(
-                        mContext.getColor(R.color.connected_network_secondary_color));
             } else {
                 mMobileNetworkLayout.setBackground(
                         isNetworkConnected ? mBackgroundOn : mBackgroundOff);
@@ -596,8 +591,6 @@ public class InternetDialog extends SystemUIDialog implements
         mConnectedWifiSummaryText.setText(mConnectedWifiEntry.getSummary(false));
         mConnectedWifiIcon.setImageDrawable(
                 mInternetDialogController.getInternetWifiDrawable(mConnectedWifiEntry));
-        mWifiSettingsIcon.setColorFilter(
-                mContext.getColor(R.color.connected_network_primary_color));
         if (mInternetDialogController.getConfiguratorQrCodeGeneratorIntentOrNull(
                 mConnectedWifiEntry) != null) {
             mShareWifiButton.setVisibility(View.VISIBLE);
