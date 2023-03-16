@@ -87,13 +87,13 @@ class FooterActionsViewModelTest : SysuiTestCase() {
                     ContentDescription.Resource(R.string.accessibility_quick_settings_settings)
                 )
             )
-        assertThat(settings.backgroundColor).isEqualTo(R.attr.shadeInactive)
+        assertThat(settings.backgroundColor).isEqualTo(R.attr.offStateColor)
         assertThat(settings.iconTint)
             .isEqualTo(
                 Utils.getColorAttrDefaultColor(
-                    themedContext,
-                    R.attr.onShadeInactiveVariant,
-                )
+                    context,
+                    com.android.internal.R.attr.textColorPrimary,
+                ),
             )
     }
 
@@ -118,8 +118,8 @@ class FooterActionsViewModelTest : SysuiTestCase() {
         assertThat(power.iconTint)
             .isEqualTo(
                 Utils.getColorAttrDefaultColor(
-                    themedContext,
-                    R.attr.onShadeActive,
+                    context,
+                    com.android.internal.R.attr.textColorPrimaryInverse,
                 ),
             )
     }
