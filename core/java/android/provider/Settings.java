@@ -7002,6 +7002,12 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CLOCK_SIZE = "status_bar_clock_size";
+        
+        /**
+         * QS Header
+         * @hide
+         */
+        public static final String QS_HEADER_IMAGE = "qs_header_image";
 
         /**
          * Clock font size QS
