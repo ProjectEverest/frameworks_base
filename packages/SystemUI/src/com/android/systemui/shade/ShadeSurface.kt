@@ -119,4 +119,6 @@ interface ShadeSurface : ShadeViewController {
     fun updateResources()
     
     fun stopNotificationPulse()
+    
+    fun fling(vel: Float, expand: Boolean, expandBecauseOfFalsing: Boolean)
 }
