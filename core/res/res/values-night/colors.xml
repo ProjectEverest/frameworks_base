@@ -55,4 +55,7 @@
     
     <!-- Seekbar progress -->
     <color name="seekbar_progress_thumb">#FF000000</color>
+
+    <!-- QS styles -->
+    <color name="qs_translucent_brightness_bg">#0FFFFFFF</color>
 </resources>
