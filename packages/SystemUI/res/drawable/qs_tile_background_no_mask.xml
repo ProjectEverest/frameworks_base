@@ -12,10 +12,10 @@
   ~ distributed under the License is distributed on an "AS IS" BASIS,
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
-  ~ limitations under the License
+  ~ limitations under the License.
   -->
-<resources>
-
-    <integer name="power_menu_lite_max_columns">2</integer>
-    <integer name="power_menu_lite_max_rows">3</integer>
-</resources>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/qs_ripple_color">
+    <item android:id="@id/background"
+        android:drawable="@drawable/qs_tile_background_shape_a11"/>
+</ripple>
