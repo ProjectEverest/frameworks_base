@@ -159,7 +159,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private StatusIconContainer mStatusIcons;
     private int mSignalClusterEndPadding = 0;
     private ClockController mClockController;
-    private boolean mShowSBClockBg;    
+    private int mShowSBClockBg;    
     private View mStatusBarLogo;
     private LyricController mLyricController;
 
@@ -439,9 +439,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             updateBlockedIcons();
             break;
         case STATUSBAR_CLOCK_CHIP:
-            mShowSBClockBg = TunerService.parseIntegerSwitch(newValue, false);
-            updateStatusBarClock();
-            break;
+                mShowSBClockBg =
+                        TunerService.parseInteger(newValue, 0);
+                updateStatusBarClock();
+                break;
         case STATUS_BAR_BATTERY_STYLE:
             int batteryStyle = TunerService.parseInteger(newValue, 0);
             mStatusIcons.setPadding(mStatusIcons.getPaddingLeft(), mStatusIcons.getPaddingTop(),
@@ -459,8 +460,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     private void updateStatusBarClock() {
-        if (mShowSBClockBg) {
-            mClockView.setBackgroundResource(R.drawable.sb_date_bg);
+        if (mShowSBClockBg != 0) {
+            String chipStyleUri = "sb_date_bg" + String.valueOf(mShowSBClockBg);
+            int resId = getContext().getResources().getIdentifier(chipStyleUri, "drawable", "com.android.systemui");
+            mClockView.setBackgroundResource(resId);
             mClockView.setPadding(10,2,10,2);
             mCenterClockView.setBackgroundResource(R.drawable.sb_date_bg);
             mCenterClockView.setPadding(10,2,10,2);
