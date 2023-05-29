@@ -316,6 +316,7 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
     final boolean mIsWallpaper;
     private final boolean mIsFloatingLayer;
     int mViewVisibility;
+    boolean mIsRedrawRequestedToResizing;
 
     /**
      * Flags to disable system UI functions. This can only be set by the one which has the
@@ -1484,6 +1485,8 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
             if ((configChanged || getOrientationChanging() || dragResizingChanged)
                     && isVisibleRequested()) {
                 winAnimator.mDrawState = DRAW_PENDING;
+                mIsRedrawRequestedToResizing = dragResizingChanged
+                        || (getOrientationChanging() && !mWmService.mDisplayFrozen);
                 if (mActivityRecord != null) {
                     mActivityRecord.clearAllDrawn();
                     if (mAttrs.type == TYPE_APPLICATION_STARTING
@@ -4404,6 +4407,7 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
         mWinAnimator.mLastAlpha = -1;
         ProtoLog.v(WM_DEBUG_ANIM, "performShowLocked: mDrawState=HAS_DRAWN in %s", this);
         mWinAnimator.mDrawState = HAS_DRAWN;
+        mIsRedrawRequestedToResizing = false;
         mWmService.scheduleAnimationLocked();
 
         if (mHidden) {
