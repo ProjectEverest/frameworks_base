@@ -13711,6 +13711,13 @@ public final class Settings {
          * @hide
          */
         public static final String SLEEP_MODE_ENABLED = "sleep_mode_enabled";
+        
+        /**
+         * Control whether to spoof current status of storage encryption.
+         * @hide
+         */
+        @Readable
+        public static final String SPOOF_STORAGE_ENCRYPTION_STATUS = "spoof_storage_encryption_status";
 
         /**
          * Indicates whether Sleep Mode turns on automatically
