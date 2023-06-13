@@ -156,7 +156,8 @@ public final class StorageSessionController {
             if (connection != null) {
                 Slog.i(TAG, "Notifying volume state changed for session with id: " + sessionId);
                 connection.notifyVolumeStateChanged(sessionId,
-                        vol.buildStorageVolume(mContext, vol.getMountUserId(), false));
+                        vol.buildStorageVolume(mContext, vol.getMountUserId(), false),
+                        vol.isPublicVolumeSessionRecorded());
             } else {
                 Slog.w(TAG, "No available storage user connection for userId : "
                         + connectionUserId);
