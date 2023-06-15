@@ -7213,6 +7213,12 @@ public final class Settings {
         public static final String QS_SPLIT_SHADE = "qs_split_shade";
 
         /**
+         * Whether to enable smart 5G mode
+         * @hide
+         */
+        public static final String SMART_5G = "smart_5g";
+
+        /**
          * These are all public system settings
          *
          * @hide
