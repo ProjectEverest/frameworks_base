@@ -6905,6 +6905,12 @@ public final class Settings {
         public static final String QS_HEADER_SIZE = "qs_header_size";
 
         /**
+         * Give haptic feedback on brightness slider changes.
+         * @hide
+         */
+        public static final String BRIGHTNESS_SLIDER_HAPTIC_ENABLED = "brightness_slider_haptic_enabled";
+
+        /**
          * These are all public system settings
          *
          * @hide
