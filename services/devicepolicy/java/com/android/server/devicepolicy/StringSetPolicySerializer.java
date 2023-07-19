@@ -34,7 +34,6 @@ import java.util.Set;
 final class StringSetPolicySerializer extends PolicySerializer<Set<String>> {
     private static final String ATTR_VALUES = "strings";
     private static final String ATTR_VALUES_SEPARATOR = ";";
-
     @Override
     void saveToXml(PolicyKey policyKey, TypedXmlSerializer serializer,
             @NonNull Set<String> value) throws IOException {
