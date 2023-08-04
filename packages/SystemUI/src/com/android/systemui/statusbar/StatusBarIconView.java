@@ -89,6 +89,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
     private float mSystemIconIntrinsicHeight = 17f;
     private float mSystemIconDefaultScale = mSystemIconDesiredHeight / mSystemIconIntrinsicHeight;
     private final int ANIMATION_DURATION_FAST = 100;
+    private int mPaddingTop;
 
     public static final int STATE_ICON = 0;
     public static final int STATE_DOT = 1;
@@ -323,6 +324,9 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
             mNightMode = nightMode;
             initializeDecorColor();
         }
+        if (mNumberBackground != null && mNumberText != null) {
+            placeNumber();
+        }
     }
 
     /**
@@ -353,6 +357,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         mSystemIconIntrinsicHeight = res.getDimension(
                 com.android.internal.R.dimen.status_bar_system_icon_intrinsic_size);
         mSystemIconDefaultScale = mSystemIconDesiredHeight / mSystemIconIntrinsicHeight;
+        mPaddingTop = res.getDimensionPixelSize(R.dimen.status_bar_padding_top);
     }
 
     public void setNotification(StatusBarNotification notification) {
@@ -634,7 +639,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         mNumberText = str;
 
         final int w = getWidth();
-        final int h = getHeight();
+        final int h = getHeight() - mPaddingTop;
         final Rect r = new Rect();
         mNumberPain.getTextBounds(str, 0, str.length(), r);
         final int tw = r.right - r.left;
@@ -1041,7 +1046,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         } else {
             setPivotX((1 - mIconScale) / 2.0f * getWidth());
         }
-        setPivotY((getHeight() - mIconScale * getWidth()) / 2.0f);
+        setPivotY((getHeight() - mPaddingTop - mIconScale * getWidth()) / 2.0f);
     }
 
     public void executeOnLayout(Runnable runnable) {
