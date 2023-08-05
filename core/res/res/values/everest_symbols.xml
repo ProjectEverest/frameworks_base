@@ -225,4 +225,8 @@
 
     <!-- Lock gesture -->
     <java-symbol type="string" name="gesture_locked_warning" />
+     
+    <!-- Delay in ms before invoking single tap gesture
+        Should be set to dt2w max time / 2 when needed -->
+   <java-symbol type="integer" name="config_singleTapDelay" />
 </resources>

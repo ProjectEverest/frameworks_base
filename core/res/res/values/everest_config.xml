@@ -271,4 +271,8 @@
        frameworks/base/core/java/com/android/internal/util/cherish/hwkeys/DeviceKeysConstants.java.
   -->
   <integer name="config_longPressOnAppSwitchBehavior">0</integer>
+  
+  <!-- Delay in ms before invoking single tap gesture
+         Should be set to dt2w max time / 2 when needed -->
+  <integer name="config_singleTapDelay">0</integer>
 </resources>
