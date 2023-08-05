@@ -4936,6 +4936,7 @@ public final class ProcessList {
                         if (ai != null) {
                             if (ai.packageName.equals(app.info.packageName)) {
                                 app.info = ai;
+                                app.getWindowProcessController().updateApplicationInfo(ai);
                                 PlatformCompatCache.getInstance()
                                         .onApplicationInfoChanged(ai);
                             }
