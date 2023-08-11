@@ -293,7 +293,7 @@ class LockscreenShadeTransitionController @Inject constructor(
     internal fun canDragDown(): Boolean {
         return (statusBarStateController.state == StatusBarState.KEYGUARD ||
                 nsslController.isInLockedDownShade()) &&
-                (qS.isFullyCollapsed || useSplitShade)
+                (qS?.isFullyCollapsed ?: false || useSplitShade)
     }
 
     /**
