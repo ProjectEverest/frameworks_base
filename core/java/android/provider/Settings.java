@@ -6704,6 +6704,60 @@ public final class Settings {
          */
         public static final String QS_UI_STYLE = "qs_ui_style";
 
+       /**
+        * Ambient Customization
+        * @hide
+        */
+        public static final String AMBIENT_TEXT = "ambient_text";
+
+        /**
+         * Ambient text string
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_STRING = "ambient_text_string";
+
+        /**
+         * Ambient text animation
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_ANIMATION = "ambient_text_animation";
+
+        /**
+         * Ambient text size
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_SIZE = "ambient_text_size";
+
+        /**
+         * Ambient text alignment
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_ALIGNMENT = "ambient_text_alignment";
+
+        /**
+         * Ambient text color
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_COLOR = "ambient_text_color";
+
+        /**
+         * Ambient text type color
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_TYPE_COLOR = "ambient_text_type_color";
+
+        /**
+        * Ambient Customization
+        * @hide
+        */
+        public static final String AMBIENT_IMAGE = "ambient_image";
+
+        /**
+         * Ambient Custom Image
+         * @hide
+         */
+        public static final String AMBIENT_CUSTOM_IMAGE = "ambient_custom_image";
+
         /**
          * @hide
          */
@@ -6923,6 +6977,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCKSCREEN_ALBUMART_FILTER);
             PRIVATE_SETTINGS.add(LS_MEDIA_FILTER_BLUR_RADIUS);
             PRIVATE_SETTINGS.add(LS_MEDIA_ARTWORK_FADE_PERCENT);
+            PRIVATE_SETTINGS.add(AMBIENT_TEXT_COLOR);
+            PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
         }
 
         /**
