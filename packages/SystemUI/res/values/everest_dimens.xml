@@ -72,4 +72,7 @@
     <dimen name="status_bar_battery_icon_width_landscape_m">28.0dip</dimen>
     <dimen name="status_bar_battery_icon_width_landscape_n">25.0dip</dimen>
     <dimen name="status_bar_battery_icon_width_landscape_o">22.0dip</dimen>
+
+     <!-- Base Multiplier for dp to px. -->
+    <dimen name="amb_font_base_multiplier_dp">1dp</dimen>
 </resources>
