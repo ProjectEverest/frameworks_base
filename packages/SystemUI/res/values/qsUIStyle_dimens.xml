@@ -15,7 +15,7 @@
      limitations under the License.
 -->
 <resources>
-    <!-- A11 QS style -->  
-    <dimen name="custom_qs_panel_padding_top">0dp</dimen>
+    <!-- A11 QS style -->
+    <dimen name="custom_qs_panel_padding_top">20dp</dimen>
     <dimen name="custom_notification_row_padding">16dp</dimen>
 </resources>
