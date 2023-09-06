@@ -6874,6 +6874,12 @@ public final class Settings {
          */
         public static final String ENABLE_TASKBAR = "enable_taskbar";
 
+         /**
+          * QS header size
+          * @hide
+          */
+        public static final String QS_HEADER_SIZE = "qs_header_size";
+
         /**
          * These are all public system settings
          *
@@ -7032,6 +7038,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_COLOR);
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
             PRIVATE_SETTINGS.add(NAV_BAR_COMPACT_LAYOUT);
+            PRIVATE_SETTINGS.add(QS_HEADER_SIZE);
         }
 
         /**
