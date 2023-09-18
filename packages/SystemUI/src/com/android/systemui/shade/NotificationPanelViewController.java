@@ -679,6 +679,9 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             (TransitionStep step) -> {
                 mIsOcclusionTransitionRunning =
                     step.getTransitionState() == TransitionState.RUNNING;
+                if (!mIsOcclusionTransitionRunning) {
+                    setKeyguardBottomAreaVisibility(mBarState, false);
+                }
             };
 
     private final Consumer<TransitionStep> mLockscreenToDreamingTransition =
