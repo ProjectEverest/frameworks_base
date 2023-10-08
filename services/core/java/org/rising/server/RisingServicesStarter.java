@@ -31,6 +31,9 @@ public class RisingServicesStarter {
     private static final String CHARGING_OPT_SERVICE_CLASS =
             "org.rising.server.AdaptiveChargingService";
 
+    private static final String QUICKSWITCH_SERVICE_CLASS =
+            "org.rising.server.QuickSwitchService";
+
     public RisingServicesStarter(SystemServiceManager systemServiceManager) {
         this.mSystemServiceManager = systemServiceManager;
     }
@@ -39,6 +42,7 @@ public class RisingServicesStarter {
         startService(SOUND_ENGINE_SERVICE_CLASS);
         startService(NETWORK_OPT_SERVICE_CLASS);
         startService(CHARGING_OPT_SERVICE_CLASS);
+        startService(QUICKSWITCH_SERVICE_CLASS);
     }
 
     private void startService(String serviceClassName) {
