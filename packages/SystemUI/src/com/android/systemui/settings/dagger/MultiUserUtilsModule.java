@@ -27,14 +27,17 @@ import com.android.systemui.CoreStartable;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dump.DumpManager;
+import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.settings.DisplayTracker;
 import com.android.systemui.settings.DisplayTrackerImpl;
+import com.android.systemui.settings.MaxBrightnessDialogController;
 import com.android.systemui.settings.UserContentResolverProvider;
 import com.android.systemui.settings.UserContextProvider;
 import com.android.systemui.settings.UserFileManager;
 import com.android.systemui.settings.UserFileManagerImpl;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.settings.UserTrackerImpl;
+import com.android.systemui.settings.brightness.BrightnessController.OnMaxBrightnessCallback;
 
 import dagger.Binds;
 import dagger.Module;
@@ -79,6 +82,15 @@ public abstract class MultiUserUtilsModule {
             @Background Handler handler
     ) {
         return new DisplayTrackerImpl(displayManager, handler);
+    }
+
+    @SysUISingleton
+    @Provides
+    static OnMaxBrightnessCallback provideOnMaxBrightnessCallback(
+            Context context,
+            ActivityStarter activityStarter
+    ) {
+        return new MaxBrightnessDialogController(context, activityStarter);
     }
 
     @Binds

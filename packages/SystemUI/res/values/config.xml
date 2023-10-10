@@ -931,4 +931,7 @@
 
     <!-- Flag controlling whether visual query attention detection has been enabled. -->
     <bool name="config_enableVisualQueryAttentionDetection">false</bool>
+
+    <!-- Whether or not show max brightness dialog -->
+    <bool name="config_enableMaxBrightnessDialog">false</bool>
 </resources>

@@ -3232,4 +3232,13 @@
     
     <!-- AI Assistant affordance [CHAR LIMIT=32] -->
     <string name="accessibility_assistant_button">Ai Assistant</string>
+
+    <!-- Title of a dialog that asks the user if they want to turn on the "Adaptive brightness" feature -->
+    <string name="oled_max_brightness_dialog_title_txt">Turn on Adaptive brightness?</string>
+    <!-- Dialog body displayed when a user set the screen brightness level to maximum. -->
+    <string name="oled_max_brightness_dialog_body_txt">Continued use of a bright screen may affect the screen quality over time.\n\nYou can reduce that risk by turning on Adaptive brightness.</string>
+    <!-- Oled max brightness dialog no thanks button -->
+    <string name="oled_max_brightness_dialog_no_button_txt">No thanks</string>
+    <!-- Oled max brightness dialog go to Settings button -->
+    <string name="oled_max_brightness_dialog_yes_button_txt">Go to Settings</string>
 </resources>
