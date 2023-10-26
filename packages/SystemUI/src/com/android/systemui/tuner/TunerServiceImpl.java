@@ -86,6 +86,7 @@ public class TunerServiceImpl extends TunerService {
             Clock.STATUS_BAR_CLOCK_SIZE,
             Clock.QS_HEADER_CLOCK_SIZE,
             Clock.STATUS_BAR_CLOCK_FONT_STYLE,
+            Clock.STATUS_BAR_CUSTOM_CLOCK_COLOR,
             Clock.STATUS_BAR_CLOCK_COLOR,
             QSHost.TILES_SETTING,
             Settings.Secure.DOZE_ALWAYS_ON,
