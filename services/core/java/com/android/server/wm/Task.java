@@ -4646,7 +4646,7 @@ class Task extends TaskFragment {
                                 // Expanding pip into new rotation, so create a rotation leash
                                 // until the display is rotated.
                                 topActivity.getOrCreateFixedRotationLeash(
-                                        topActivity.getSyncTransaction());
+                                        topActivity.getPendingTransaction());
                             }
                             // Reset the activity windowing mode to match the parent.
                             topActivity.setWindowingMode(WINDOWING_MODE_UNDEFINED);
