@@ -35,10 +35,6 @@ import androidx.preference.PreferenceViewHolder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Progres bar preference with a usage summary and a total summary.
- * This preference shows number in usage summary with enlarged font size.
- */
 public class StorageUsageProgressBarPreference extends Preference {
 
     private final Pattern mNumberPattern = Pattern.compile("[\\d]*[\\٫.,]?[\\d]+");
@@ -50,28 +46,15 @@ public class StorageUsageProgressBarPreference extends Preference {
     private ImageView mCustomImageView;
     private int mPercent = -1;
 
-    /**
-     * Perform inflation from XML and apply a class-specific base style.
-     *
-     * @param context The {@link Context} this is associated with, through which it can
-     *                access the current theme, resources, {@link SharedPreferences}, etc.
-     * @param attrs   The attributes of the XML tag that is inflating the preference
-     */
     public StorageUsageProgressBarPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayoutResource(R.layout.preference_usage_progress_bar);
     }
 
-    /**
-     * Constructor to create a preference.
-     *
-     * @param context The Context this is associated with.
-     */
     public StorageUsageProgressBarPreference(Context context) {
         this(context, null);
     }
 
-    /** Set usage summary, number in the summary will show with enlarged font size. */
     public void setUsageSummary(CharSequence usageSummary) {
         if (TextUtils.equals(mUsageSummary, usageSummary)) {
             return;
@@ -80,7 +63,6 @@ public class StorageUsageProgressBarPreference extends Preference {
         notifyChanged();
     }
 
-    /** Set total summary. */
     public void setTotalSummary(CharSequence totalSummary) {
         if (TextUtils.equals(mTotalSummary, totalSummary)) {
             return;
@@ -89,7 +71,6 @@ public class StorageUsageProgressBarPreference extends Preference {
         notifyChanged();
     }
 
-    /** Set bottom summary. */
     public void setBottomSummary(CharSequence bottomSummary) {
         if (TextUtils.equals(mBottomSummary, bottomSummary)) {
             return;
@@ -98,9 +79,8 @@ public class StorageUsageProgressBarPreference extends Preference {
         notifyChanged();
     }
 
-    /** Set percentage of the progress bar. */
     public void setPercent(long usage, long total) {
-        if (usage >  total) {
+        if (usage > total) {
             return;
         }
         if (total == 0L) {
@@ -118,7 +98,6 @@ public class StorageUsageProgressBarPreference extends Preference {
         notifyChanged();
     }
 
-    /** Set custom ImageView to the right side of total summary. */
     public <T extends ImageView> void setCustomContent(T imageView) {
         if (imageView == mCustomImageView) {
             return;
@@ -127,18 +106,6 @@ public class StorageUsageProgressBarPreference extends Preference {
         notifyChanged();
     }
 
-    /**
-     * Binds the created View to the data for this preference.
-     *
-     * <p>This is a good place to grab references to custom Views in the layout and set
-     * properties on them.
-     *
-     * <p>Make sure to call through to the superclass's implementation.
-     *
-     * @param holder The ViewHolder that provides references to the views to fill in. These views
-     *               will be recycled, so you should not hold a reference to them after this method
-     *               returns.
-     */
     @Override
     public void onBindViewHolder(PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);
@@ -167,7 +134,6 @@ public class StorageUsageProgressBarPreference extends Preference {
         final ValueAnimator animator = ValueAnimator.ofInt(0, mPercent);
         if (mPercent > 0) {
             progressBar.setIndeterminate(false);
-            // Animate our new progress layout
             animator.setDuration(ANIM_DURATION);
             animator.addUpdateListener(animation -> {
                 int animProgress = (Integer) animation.getAnimatedValue();
@@ -195,7 +161,7 @@ public class StorageUsageProgressBarPreference extends Preference {
 
         final Matcher matcher = mNumberPattern.matcher(summary);
         if (matcher.find()) {
-            final SpannableString spannableSummary =  new SpannableString(summary);
+            final SpannableString spannableSummary = new SpannableString(summary);
             spannableSummary.setSpan(new AbsoluteSizeSpan(64, true /* dip */), matcher.start(),
                     matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             return spannableSummary;
