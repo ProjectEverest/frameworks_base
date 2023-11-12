@@ -6485,6 +6485,11 @@ public final class Settings {
         public static final String CHARGING_ANIMATION_BG = "charging_animation_bg";
 
 	/**
+         * @hide
+         */
+        public static final String VOLUME_MEDIA_OUTPUT_TOGGLE = "volume_media_output_toggle";
+
+        /**
          * Whether StatusBar icons should use app icon
          * @hide
          */
