@@ -6926,6 +6926,11 @@ public final class Settings {
         public static final String QS_BT_AUTO_ON = "qs_bt_auto_on";
 
         /**
+         * @hide
+         */
+        public static final String ISLAND_NOTIFICATION = "island_notification";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
