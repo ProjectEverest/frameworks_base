@@ -82,4 +82,8 @@
      <!-- Additional gesture navbar lengths -->
      <dimen name="navigation_home_handle_width_short">72dp</dimen>
      <dimen name="navigation_home_handle_width_long">140dp</dimen>
+
+     <!-- Island notification -->
+     <dimen name="island_icon_size">48dp</dimen>
+     <dimen name="island_side_margin">12dp</dimen>
 </resources>

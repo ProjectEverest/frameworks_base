@@ -61,6 +61,7 @@ import android.app.Notification;
 import android.app.StatusBarManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.ContentObserver;
@@ -245,6 +246,8 @@ import com.android.systemui.util.Utils;
 import com.android.systemui.util.time.SystemClock;
 import com.android.wm.shell.animation.FlingAnimationUtils;
 
+import com.android.systemui.island.IslandView;
+
 import kotlin.Unit;
 
 import com.android.systemui.custom.AmbientText;
@@ -301,6 +304,9 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private static final String COUNTER_PANEL_OPEN_PEEK = "panel_open_peek";
     private static final String QS_UI_STYLE =
             "system:" + Settings.System.QS_UI_STYLE;
+
+    private static final String ISLAND_NOTIFICATION =
+            "system:" + Settings.System.ISLAND_NOTIFICATION;
 
     private static final Rect M_DUMMY_DIRTY_RECT = new Rect(0, 0, 1, 1);
     private static final Rect EMPTY_RECT = new Rect();
@@ -665,6 +671,9 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
 
 
     private boolean mBlockedGesturalNavigation = false;
+    private IslandView mNotifIsland;
+    private NotificationStackScrollLayout mNotificationStackScroller;
+    private boolean mUseIslandNotification;
 
     private final Runnable mFlingCollapseRunnable = () -> fling(0, false /* expand */,
             mNextCollapseSpeedUpFactor, false /* expandBecauseOfFalsing */);
@@ -1143,7 +1152,9 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
 
         mAmbientText = (AmbientText) mView.findViewById(R.id.text_container);
         mAmbientCustomImage = (AmbientCustomImage) mView.findViewById(R.id.image_container);
-
+        mNotificationStackScroller = mView.findViewById(R.id.notification_stack_scroller);
+        mNotifIsland = mView.findViewById(R.id.notification_island);
+        mNotifIsland.setScroller(mNotificationStackScroller);
         initBottomArea();
 
         mWakeUpCoordinator.setStackScroller(mNotificationStackScrollLayoutController);
@@ -1425,6 +1436,12 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             view = stub.inflate();
         }
         return view;
+    }
+    
+    void updateIslandBackground() {
+        boolean nightMode = (mView.getContext().getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        mNotifIsland.setIslandBackgroundColorTint(nightMode);
     }
 
     @VisibleForTesting
@@ -3082,6 +3099,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
 
     private void setHeadsUpManager(HeadsUpManagerPhone headsUpManager) {
         mHeadsUpManager = headsUpManager;
+        mNotifIsland.setHeadsupManager(headsUpManager);
         mHeadsUpManager.addListener(mOnHeadsUpChangedListener);
         mHeadsUpTouchHelper = new HeadsUpTouchHelper(headsUpManager,
                 mNotificationStackScrollLayoutController.getHeadsUpCallback(),
@@ -4766,6 +4784,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         public void onThemeChanged() {
             debugLog("onThemeChanged");
             reInflateViews();
+            updateIslandBackground();
         }
 
         @Override
@@ -4971,6 +4990,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                     mDoubleTapToSleepObserver);
             mDoubleTapToSleepObserver.onChange(true);
             mTunerService.addTunable(this, QS_UI_STYLE);
+            mTunerService.addTunable(this, ISLAND_NOTIFICATION);
             // Theme might have changed between inflating this view and attaching it to the
             // window, so
             // force a call to onThemeChanged
@@ -4997,6 +5017,10 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             switch (key) {
                 case QS_UI_STYLE:
                     mIsA11Style = TunerService.parseInteger(newValue, 0) == 1;
+                    break;
+                case ISLAND_NOTIFICATION:
+                    mUseIslandNotification = TunerService.parseIntegerSwitch(newValue, false);
+                    mNotifIsland.setIslandEnabled(mUseIslandNotification);
                     break;
                 default:
                     break;
@@ -5714,6 +5738,16 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         PendingIntent sender = PendingIntent.getBroadcast(mView.getContext(),
                 0, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         alarmManager.cancel(sender);
+    }    
+
+    @Override
+    public void showIsland(boolean show) {
+        if (!mUseIslandNotification) return;
+        mNotifIsland.showIsland(show, getExpandedFraction());
+    }
+
+    protected void updateIslandVisibility() {
+        mNotifIsland.updateIslandVisibility(getExpandedFraction());
     }
 }
 
