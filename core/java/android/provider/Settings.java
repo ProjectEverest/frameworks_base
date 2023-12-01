@@ -6736,6 +6736,11 @@ public final class Settings {
         public static final String SMART_5G = "smart_5g";
 
         /**
+         * @hide
+         */
+        public static final String WIFI_STANDARD_ICON = "wifi_standard_icon";
+
+        /**
          * Whether to show the battery bar
          * @hide
          */
