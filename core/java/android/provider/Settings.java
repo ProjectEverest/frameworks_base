@@ -6943,6 +6943,11 @@ public final class Settings {
         public static final String QS_HEADER_SIZE = "qs_header_size";
         
         /**
+         * @hide
+         */
+        public static final String WIFI_STANDARD_ICON = "wifi_standard_icon";
+        
+        /**
          * Whether to show the battery bar
          * @hide
          */
