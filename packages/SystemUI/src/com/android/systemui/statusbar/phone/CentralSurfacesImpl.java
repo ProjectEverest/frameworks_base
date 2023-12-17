@@ -837,17 +837,17 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, Tune
             InteractionJankMonitor jankMonitor,
             DeviceStateManager deviceStateManager,
             WiredChargingRippleController wiredChargingRippleController,
-            IDreamManager dreamManager,
-            TunerService tunerService,
+            IDreamManager dreamManager,            
             Lazy<CameraLauncher> cameraLauncherLazy,
             Lazy<LightRevealScrimViewModel> lightRevealScrimViewModelLazy,
             LightRevealScrim lightRevealScrim,
             AlternateBouncerInteractor alternateBouncerInteractor,
-            UserTracker userTracker,
+            UserTracker userTracker,           
             Provider<FingerprintManager> fingerprintManager,
+            TunerService tunerService,
             ActivityStarter activityStarter,
-            BurnInProtectionController burnInProtectionController,
-            SysUiState sysUiState
+            SysUiState sysUiState,
+            BurnInProtectionController burnInProtectionController            
     ) {
         mContext = context;
         mNotificationsController = notificationsController;
@@ -1757,11 +1757,11 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, Tune
         mMediaManager.addCallback(mPulseController);
     }
 
-    protected NotificationShadeWindowViewController getNotificationShadeWindowViewController() {
+    public NotificationShadeWindowViewController getNotificationShadeWindowViewController() {
         return mNotificationShadeWindowViewControllerLazy.get();
     }
 
-    protected NotificationShadeWindowView getNotificationShadeWindowView() {
+    public NotificationShadeWindowView getNotificationShadeWindowView() {
         return getNotificationShadeWindowViewController().getView();
     }
 
@@ -4053,6 +4053,44 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces, Tune
         if (mPhoneStatusBarViewController != null) {
             mPhoneStatusBarViewController.setBrightnessControlEnabled(
                     loadBooleanSystemSettings(Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0));
+        }
+    }
+    
+    @Override
+    public void startActivity(Intent intent, boolean dismissShade) {
+        mActivityStarter.startActivityDismissingKeyguard(intent, false /* onlyProvisioned */, dismissShade);
+    }
+
+    @Override
+    public void startPendingIntentDismissingKeyguard(PendingIntent intent) {
+        mActivityStarter.startPendingIntentDismissingKeyguard(intent);
+    }
+
+    @Override
+    public ShadeViewController getNotificationPanelViewController() {
+        return mShadeSurface;
+    }
+
+    @Override
+    public void wakeUpDeviceifDozing() {
+        mPowerInteractor.wakeUpIfDozing("AMBIENT MUSIC", PowerManager.WAKE_REASON_GESTURE);
+    }
+
+    public void collapseShade() {
+        if (mShadeController != null) {
+            mShadeController.collapseShade();
+        }
+    }
+
+    public void postAnimateCollapsePanels() {
+        if (mShadeController != null) {
+            mShadeController.animateCollapseShade();
+        }
+    }
+
+    public void animateExpandNotificationsPanel() {
+        if (mCommandQueueCallbacks != null) {
+            mCommandQueueCallbacks.animateExpandNotificationsPanel();
         }
     }
 }
