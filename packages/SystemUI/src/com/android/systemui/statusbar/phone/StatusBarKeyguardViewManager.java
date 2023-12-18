@@ -375,7 +375,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
         @Override
         public void onBiometricHelp(int msgId, String helpString,
                 BiometricSourceType biometricSourceType) {
-            if (biometricSourceType == BiometricSourceType.FACE && helpString.equals(mContext.getString(R.string.kg_face_not_recognized))){
+            if (biometricSourceType == BiometricSourceType.FACE && mContext.getString(R.string.kg_face_not_recognized).equals(helpString)) {
                 FaceUnlockImageView.setBouncerState(FaceUnlockImageView.State.NOT_VERIFIED);
             }
         }
