@@ -271,5 +271,6 @@ public class SecureSettings {
         // EverestOS additions
         Settings.Secure.DOZE_DOUBLE_TAP_GESTURE_AMBIENT,
         Settings.Secure.DOZE_PICK_UP_GESTURE_AMBIENT,
+        Settings.Secure.VPN_ENFORCE_DNS,
     };
 }
