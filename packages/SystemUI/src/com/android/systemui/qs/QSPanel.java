@@ -770,8 +770,8 @@ public class QSPanel extends LinearLayout implements Tunable {
         if (mBrightnessView == null) return;
         ViewGroup newParent = mUsingHorizontalLayout ? mHorizontalContentContainer : this;
         switchAllContentToParent(newParent, mTileLayout);
-        if (mBrightnessRunnable != null) {
-            updateResources();
+        updateResources();
+        if (mBrightnessRunnable != null) {            
             mBrightnessRunnable.run();
         }
     }
