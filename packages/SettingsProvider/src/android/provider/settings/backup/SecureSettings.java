@@ -260,5 +260,6 @@ public class SecureSettings {
         Settings.Secure.EVEN_DIMMER_MIN_NITS,
         Settings.Secure.TETHERING_ALLOW_VPN_UPSTREAMS,
         Settings.Secure.MEDIA_CONTROLS_ALWAYS_SHOW_TIME,
+        Settings.Secure.CLOCK_LS
     };
 }
