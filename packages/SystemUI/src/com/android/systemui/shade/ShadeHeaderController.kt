@@ -162,6 +162,8 @@ constructor(
     private val mShadeCarrierGroup: ShadeCarrierGroup = header.requireViewById(R.id.carrier_group)
     private val systemIconsHoverContainer: View =
         header.requireViewById(R.id.hover_system_icons_container)
+    private val shadeCarrierText: TextView? = header.findViewById(R.id.shade_carrier_text)
+    private val shadeNoCarrierText: TextView? = header.findViewById(R.id.shade_carrier_text)
 
     private var roundedCorners = 0
     private var cutout: DisplayCutout? = null
@@ -616,6 +618,8 @@ constructor(
             clock.setTextColor(textColorPrimary)
             date.setTextColor(textColorPrimary)
             mShadeCarrierGroup.updateColors(textColorPrimary, colorStateList)
+            shadeCarrierText?.setTextColor(textColorPrimary)
+            shadeNoCarrierText?.setTextColor(textColorPrimary)
             batteryIcon.updateColors(textColorPrimary, textColorSecondary, textColorPrimary)
             clock.updateClockSize()
             if (clock.mCustomClockColor == true) {
