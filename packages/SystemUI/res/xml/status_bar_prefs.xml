@@ -104,6 +104,16 @@
         android:icon="@drawable/ic_statusbar_alarm" />
 
     <com.android.systemui.tuner.StatusBarSwitch
+        android:icon="@drawable/ic_statusbar_hd_calling"
+        android:key="hd_calling"
+        android:title="@string/status_bar_hd_calling" />
+
+    <com.android.systemui.tuner.StatusBarSwitch
+        android:icon="@drawable/ic_statusbar_vowifi"
+        android:key="vowifi"
+        android:title="@string/status_bar_vowifi" />
+
+    <com.android.systemui.tuner.StatusBarSwitch
         android:key="location"
         android:title="@string/status_bar_location"
         android:icon="@drawable/ic_statusbar_location" />
