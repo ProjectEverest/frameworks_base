@@ -2511,8 +2511,7 @@ final class InstallPackageHelper {
             //
             // We only need to dexopt if the package meets ALL of the following conditions:
             //   1) it is not an instant app or if it is then dexopt is enabled via gservices.
-            //   2) it is not debuggable.
-            //   3) it is not on Incremental File System.
+            //   2) it is not on Incremental File System.
             //
             // Note that we do not dexopt instant apps by default. dexopt can take some time to
             // complete, so we skip this step during installation. Instead, we'll take extra time
@@ -2531,7 +2530,6 @@ final class InstallPackageHelper {
                             mContext.getContentResolver(),
                             android.provider.Settings.Global.INSTANT_APP_DEXOPT_ENABLED, 0) != 0)
                             && pkg != null
-                            && !pkg.isDebuggable()
                             && (!onIncremental)
                             && dexoptOptions.isCompilationEnabled()
                             && !isApex;
