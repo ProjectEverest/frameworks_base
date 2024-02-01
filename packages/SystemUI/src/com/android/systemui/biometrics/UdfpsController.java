@@ -75,6 +75,7 @@ import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.systemui.Dumpable;
 import com.android.systemui.R;
 import com.android.systemui.animation.ActivityLaunchAnimator;
+import com.android.systemui.biometrics.AuthController;
 import com.android.systemui.biometrics.dagger.BiometricsBackground;
 import com.android.systemui.biometrics.shared.model.UdfpsOverlayParams;
 import com.android.systemui.biometrics.udfps.InteractionEvent;
@@ -186,6 +187,7 @@ public class UdfpsController implements DozeReceiver, Dumpable {
     @NonNull private final UdfpsKeyguardAccessibilityDelegate mUdfpsKeyguardAccessibilityDelegate;
     @NonNull private final SelectedUserInteractor mSelectedUserInteractor;
     @NonNull private final FpsUnlockTracker mFpsUnlockTracker;
+    @NonNull private final AuthController mAuthController;
     private final boolean mIgnoreRefreshRate;
     private final KeyguardTransitionInteractor mKeyguardTransitionInteractor;
 
@@ -413,9 +415,9 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         if (mSensorProps.sensorId != sensorProps.sensorId) {
             mSensorProps = sensorProps;
             Log.w(TAG, "updateUdfpsParams | sensorId has changed");
-            // Update animation position on sensor props change.
+            // Update animation position if sensor id has changed.
             if (mUdfpsAnimation != null) {
-                mUdfpsAnimation.updatePosition(sensorProps);
+                mUdfpsAnimation.updatePosition();
             }
         }
 
@@ -708,7 +710,8 @@ public class UdfpsController implements DozeReceiver, Dumpable {
             @NonNull FpsUnlockTracker fpsUnlockTracker,
             @NonNull KeyguardTransitionInteractor keyguardTransitionInteractor,
             Lazy<DeviceEntryUdfpsTouchOverlayViewModel> deviceEntryUdfpsTouchOverlayViewModel,
-            Lazy<DefaultUdfpsTouchOverlayViewModel> defaultUdfpsTouchOverlayViewModel) {
+            Lazy<DefaultUdfpsTouchOverlayViewModel> defaultUdfpsTouchOverlayViewModel,
+            @NonNull AuthController authController) {
         mContext = context;
         mExecution = execution;
         mVibrator = vibrator;
@@ -810,10 +813,12 @@ public class UdfpsController implements DozeReceiver, Dumpable {
                 }
             );
         }
+        
+        mAuthController = authController;
 
         if (com.android.internal.util.everest.EverestUtils.isPackageInstalled(mContext,
                 "com.everest.udfps.resources")) {
-            mUdfpsAnimation = new UdfpsAnimation(mContext, mWindowManager, mSensorProps);
+            mUdfpsAnimation = new UdfpsAnimation(mContext, mWindowManager, mAuthController);
         }
     }
 
