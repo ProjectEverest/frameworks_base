@@ -78,6 +78,7 @@ import com.android.wm.shell.common.RemoteCallable;
 import com.android.wm.shell.common.ShellExecutor;
 import com.android.wm.shell.common.TransactionPool;
 import com.android.wm.shell.common.annotations.ExternalThread;
+import com.android.wm.shell.common.annotations.ShellMainThread;
 import com.android.wm.shell.keyguard.KeyguardTransitionHandler;
 import com.android.wm.shell.protolog.ShellProtoLogGroup;
 import com.android.wm.shell.sysui.ShellCommandHandler;
@@ -1155,6 +1156,7 @@ public class Transitions implements RemoteCallable<Transitions>,
     }
 
     /** Start a new transition directly. */
+    @ShellMainThread
     public IBinder startTransition(@WindowManager.TransitionType int type,
             @NonNull WindowContainerTransaction wct, @Nullable TransitionHandler handler) {
         ProtoLog.v(ShellProtoLogGroup.WM_SHELL_TRANSITIONS, "Directly starting a new transition "
