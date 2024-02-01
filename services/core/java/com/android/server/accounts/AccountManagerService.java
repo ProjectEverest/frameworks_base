@@ -197,6 +197,8 @@ public class AccountManagerService
     private static final int MESSAGE_TIMED_OUT = 3;
     private static final int MESSAGE_COPY_SHARED_ACCOUNT = 4;
 
+    private static final long MESSAGE_TIME_OUT_MILLIS = 10000;
+
     private final IAccountAuthenticatorCache mAuthenticatorCache;
     private static final String PRE_N_DATABASE_NAME = "accounts.db";
     private static final Intent ACCOUNTS_CHANGED_INTENT;
@@ -5147,6 +5149,8 @@ public class AccountManagerService
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            var msg = mHandler.obtainMessage(MESSAGE_TIMED_OUT, this);
+            mHandler.sendMessageDelayed(msg, MESSAGE_TIME_OUT_MILLIS);
             synchronized (mSessionLock) {
                 mAuthenticator = IAccountAuthenticator.Stub.asInterface(service);
                 try {
@@ -5177,6 +5181,9 @@ public class AccountManagerService
         public abstract void run() throws RemoteException;
 
         public void onTimedOut() {
+            if (Log.isLoggable(TAG, Log.INFO)) {
+                Slog.i(TAG, "Cancel session due to timeout: " + toDebugString());
+            }
             IAccountManagerResponse response = getResponseAndClose();
             if (Log.isLoggable(TAG, Log.VERBOSE)) {
                 Log.v(TAG, "Session.onTimedOut");
