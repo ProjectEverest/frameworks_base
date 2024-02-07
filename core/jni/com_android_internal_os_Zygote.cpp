@@ -1742,6 +1742,7 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids, 
                              bool is_top_app, jobjectArray pkg_data_info_list,
                              jobjectArray allowlisted_data_info_list, bool mount_data_dirs,
                              bool mount_storage_dirs) {
+    ATRACE_CALL();
     const char* process_name = is_system_server ? "system_server" : "zygote";
     auto fail_fn = std::bind(ZygoteFailure, env, process_name, managed_nice_name, _1);
     auto extract_fn = std::bind(ExtractJString, env, process_name, managed_nice_name, _1);
@@ -2362,6 +2363,7 @@ static jint com_android_internal_os_Zygote_nativeForkAndSpecialize(
         jstring instruction_set, jstring app_data_dir, jboolean is_top_app,
         jobjectArray pkg_data_info_list, jobjectArray allowlisted_data_info_list,
         jboolean mount_data_dirs, jboolean mount_storage_dirs) {
+    ATRACE_CALL();
     jlong capabilities = CalculateCapabilities(env, uid, gid, gids, is_child_zygote);
 
     if (UNLIKELY(managed_fds_to_close == nullptr)) {
