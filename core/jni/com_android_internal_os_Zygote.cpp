@@ -1875,6 +1875,7 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids, 
                              bool is_top_app, jobjectArray pkg_data_info_list,
                              jobjectArray allowlisted_data_info_list, bool mount_data_dirs,
                              bool mount_storage_dirs, bool mount_sysprop_overrides) {
+    ATRACE_CALL();
     const char* process_name = is_system_server ? "system_server" : "zygote";
     auto fail_fn = std::bind(ZygoteFailure, env, process_name, managed_nice_name, _1);
     auto extract_fn = std::bind(ExtractJString, env, process_name, managed_nice_name, _1);
@@ -2391,6 +2392,11 @@ pid_t zygote::ForkCommon(JNIEnv* env, bool is_system_server,
                          const std::vector<int>& fds_to_ignore,
                          bool is_priority_fork,
                          bool purge) {
+  ATRACE_CALL();
+  if (is_priority_fork) {
+    setpriority(PRIO_PROCESS, 0, PROCESS_PRIORITY_MAX);
+  }
+
   SetSignalHandlers();
 
   // Curry a failure function.
@@ -2476,6 +2482,10 @@ pid_t zygote::ForkCommon(JNIEnv* env, bool is_system_server,
   // We blocked SIGCHLD prior to a fork, we unblock it here.
   UnblockSignal(SIGCHLD, fail_fn);
 
+  if (is_priority_fork && pid != 0) {
+    setpriority(PRIO_PROCESS, 0, PROCESS_PRIORITY_DEFAULT);
+  }
+
   return pid;
 }
 
@@ -2491,6 +2501,7 @@ static jint com_android_internal_os_Zygote_nativeForkAndSpecialize(
         jstring instruction_set, jstring app_data_dir, jboolean is_top_app,
         jobjectArray pkg_data_info_list, jobjectArray allowlisted_data_info_list,
         jboolean mount_data_dirs, jboolean mount_storage_dirs, jboolean mount_sysprop_overrides) {
+    ATRACE_CALL();
     jlong capabilities = CalculateCapabilities(env, uid, gid, gids, is_child_zygote);
 
     if (UNLIKELY(managed_fds_to_close == nullptr)) {
@@ -2543,6 +2554,7 @@ static jint com_android_internal_os_Zygote_nativeForkSystemServer(
         JNIEnv* env, jclass, uid_t uid, gid_t gid, jintArray gids,
         jint runtime_flags, jobjectArray rlimits, jlong permitted_capabilities,
         jlong effective_capabilities) {
+  ATRACE_CALL();
   std::vector<int> fds_to_close(MakeUsapPipeReadFDVector()),
                    fds_to_ignore(fds_to_close);
 
@@ -2618,6 +2630,7 @@ static jint com_android_internal_os_Zygote_nativeForkApp(JNIEnv* env,
                                                          jintArray managed_session_socket_fds,
                                                          jboolean args_known,
                                                          jboolean is_priority_fork) {
+  ATRACE_CALL();
   std::vector<int> session_socket_fds =
       ExtractJIntArray(env, "USAP", nullptr, managed_session_socket_fds)
           .value_or(std::vector<int>());
@@ -2633,6 +2646,7 @@ int zygote::forkApp(JNIEnv* env,
                     bool args_known,
                     bool is_priority_fork,
                     bool purge) {
+  ATRACE_CALL();
 
   std::vector<int> fds_to_close(MakeUsapPipeReadFDVector()),
                    fds_to_ignore(fds_to_close);
