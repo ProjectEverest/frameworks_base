@@ -71,8 +71,9 @@ class KeyguardSimPinViewControllerTest : SysuiTestCase() {
         `when`(telephonyManager.supplyIccLockPin(anyString()))
             .thenReturn(mock(PinResult::class.java))
         simPinView =
-            LayoutInflater.from(context).inflate(R.layout.keyguard_sim_pin_view, null)
-                as KeyguardSimPinView
+            LayoutInflater.from(context)
+                .inflate(R.layout.keyguard_sim_pin_view, null)
+                .requireViewById(R.id.keyguard_sim_pin_view) as KeyguardSimPinView
         val fakeFeatureFlags = FakeFeatureFlags()
         fakeFeatureFlags.set(Flags.REVAMPED_BOUNCER_MESSAGES, true)
 
