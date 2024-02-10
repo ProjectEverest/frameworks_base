@@ -18,12 +18,10 @@
 <com.android.systemui.shade.carrier.ShadeCarrierGroup
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/qs_mobile"
-    android:layout_width="0dp"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:gravity="end|center_vertical"
-    android:orientation="horizontal">
-
+    android:orientation="vertical"
+    android:gravity="end|center_vertical">
 
     <com.android.systemui.util.AutoMarqueeTextView
         android:id="@+id/no_carrier_text"
@@ -42,33 +40,35 @@
     <include
         layout="@layout/shade_carrier"
         android:id="@+id/carrier1"
-        android:layout_weight="1"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <View
         android:id="@+id/shade_carrier_divider1"
-        android:layout_width="@dimen/qs_header_carrier_separator_width"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qs_header_carrier_separator_width"
         android:visibility="gone"
         android:importantForAccessibility="no"/>
 
     <include
         layout="@layout/shade_carrier"
         android:id="@+id/carrier2"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:visibility="gone"/>
 
     <View
         android:id="@+id/shade_carrier_divider2"
-        android:layout_width="@dimen/qs_header_carrier_separator_width"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qs_header_carrier_separator_width"
         android:visibility="gone"
         android:importantForAccessibility="no"/>
 
     <include
         layout="@layout/shade_carrier"
         android:id="@+id/carrier3"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:visibility="gone"/>
 
 </com.android.systemui.shade.carrier.ShadeCarrierGroup>
