@@ -338,8 +338,8 @@ public class QSPanel extends LinearLayout implements Tunable {
         }
         // Adjust view positions based on tile squishing
         int tileHeightOffset = mTileLayout.getTilesHeight() - mTileLayout.getHeight();
-
         boolean move = false;
+        
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             if (move) {
@@ -348,22 +348,19 @@ public class QSPanel extends LinearLayout implements Tunable {
                     topOffset = 0;
                 } else {
                     topOffset = tileHeightOffset;
-                }
-                // Animation can occur before the layout pass, meaning setSquishinessFraction() gets
-                // called before onLayout(). So, a child view could be null because it has not
-                // been added to mChildrenLayoutTop yet (which happens in onLayout()).
-                // We use a continue statement here to catch this NPE because, on the layout pass,
-                // this code will be called again from onLayout() with the populated children views.
+                }                    
+                // Ensure child layout top is not null and adjust view position
                 Integer childLayoutTop = mChildrenLayoutTop.get(child);
-                if (childLayoutTop == null) {
-                    continue;
-                }
-                int top = childLayoutTop;
-                child.setLeftTopRightBottom(child.getLeft(), top + topOffset,
-                        child.getRight(), top + topOffset + child.getHeight());
+                if (childLayoutTop != null) {
+	            int top = childLayoutTop;
+        	    child.setLeftTopRightBottom(child.getLeft(), top + topOffset,
+                           child.getRight(), top + topOffset + child.getHeight()); 
+                } else {
+                    Log.w(TAG, "Child layout top is null for child: " + child);  
+                }          	
             }
             if (child == mTileLayout) {
-                move = true;
+                    move = true;
             }
         }
     }
