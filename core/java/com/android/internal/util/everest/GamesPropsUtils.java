@@ -16,6 +16,7 @@
 
 package com.android.internal.util.everest;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.SystemProperties;
 import android.util.Log;
@@ -101,8 +102,9 @@ public class GamesPropsUtils {
         return map;
     }
 
-    public static void setProps(Application app) {
-        final String packageName = app.getPackageName();
+    public static void setProps(Context context) {
+        final String packageName = context.getPackageName();
+
         if (packageName == null || packageName.isEmpty()) {
             return;
         }

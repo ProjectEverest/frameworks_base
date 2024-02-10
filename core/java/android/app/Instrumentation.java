@@ -1285,9 +1285,9 @@ public class Instrumentation {
         Application app = getFactory(context.getPackageName())
                 .instantiateApplication(cl, className);
         app.attach(context);
-        MeizuPropsUtils.setProps(app);
-        PixelPropsUtils.setProps(app);
-        GamesPropsUtils.setProps(app);
+        PixelPropsUtils.setProps(context);
+        GamesPropsUtils.setProps(context);
+        MeizuPropsUtils.setProps(context);
         return app;
     }
     
@@ -1305,9 +1305,9 @@ public class Instrumentation {
             ClassNotFoundException {
         Application app = (Application)clazz.newInstance();
         app.attach(context);
-        MeizuPropsUtils.setProps(app);
-        PixelPropsUtils.setProps(app);
-        GamesPropsUtils.setProps(app);
+        PixelPropsUtils.setProps(context);
+        GamesPropsUtils.setProps(context);
+        MeizuPropsUtils.setProps(context);
         return app;
     }
 

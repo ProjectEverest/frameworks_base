@@ -17,7 +17,7 @@
  */
 package com.android.internal.util.everest;
 
-import android.app.Application;
+import android.content.Context;
 import android.os.Build;
 import android.os.SystemProperties;
 import android.util.Log;
@@ -57,12 +57,12 @@ public class MeizuPropsUtils {
         propsToChange.put("MODEL", "meizu 16th Plus");
     }
 
-    public static void setProps(Application app) {
+    public static void setProps(Context context) {
         if (!SystemProperties.getBoolean(DISGUISE_PROPS_FOR_MUSIC_APP, false)) {
             return;
         }
 
-        final String packageName = app.getPackageName();
+        final String packageName = context.getPackageName();
         if (packageName == null){
             return;
         }
