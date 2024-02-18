@@ -105,13 +105,12 @@ public class QuickStatusBarHeader extends FrameLayout
         mQsHeaderImageView.setClipToOutline(true);
 
         updateSettings();
-        updateResources();
     }
 
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        updateResources();
+        updateSettings();
     }
 
     @Override
