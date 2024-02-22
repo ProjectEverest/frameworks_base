@@ -158,6 +158,15 @@ public class QuickStatusBarHeader extends FrameLayout
             qqsLP.topMargin = mContext.getResources()
                     .getDimensionPixelSize(R.dimen.large_screen_shade_header_min_height);
         }
+ 
+       // Hide header image in landscape mode
+    	if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+    	    mQsHeaderImageView.setVisibility(View.GONE);
+    	} else {
+    	    mQsHeaderImageView.setVisibility(View.VISIBLE);
+    	    updateHeaderImage();
+    	    applyHeaderBackgroundShadow();
+       }
 
         mHeaderQsPanel.setLayoutParams(qqsLP);
 
