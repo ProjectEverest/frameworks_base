@@ -799,30 +799,24 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
     }
 
     private void reevaluateSystemTheme(boolean forceReload) {
-        final WallpaperColors currentColors = mCurrentColors.get(mUserTracker.getUserId());
-        final int mainColor;
-        if (currentColors == null) {
-            mainColor = Color.TRANSPARENT;
-        } else {
-            mainColor = getNeutralColor(currentColors);
-        }
+    	WallpaperColors currentColors = mCurrentColors.get(mUserTracker.getUserId());
+    	int mainColor = (currentColors == null) ? Color.TRANSPARENT : getNeutralColor(currentColors);
+    	if (!forceReload && mMainWallpaperColor == mainColor) {
+    	    return;
+    }
 
-        if (mMainWallpaperColor == mainColor && !forceReload) {
-            return;
-        }
-        mMainWallpaperColor = mainColor;
+    mMainWallpaperColor = mainColor;
 
-        if (mIsMonetEnabled) {
-            mThemeStyle = fetchThemeStyleFromSetting();
-            createOverlays(mMainWallpaperColor);
-            mNeedsOverlayCreation = true;
-            if (DEBUG) {
-                Log.d(TAG, "fetched overlays. accent: " + mSecondaryOverlay
-                        + " neutral: " + mNeutralOverlay + " dynamic: " + mDynamicOverlay);
-            }
-        }
-
-        updateThemeOverlays();
+    if (mIsMonetEnabled) {
+        mThemeStyle = fetchThemeStyleFromSetting();
+        createOverlays(mMainWallpaperColor);
+        mNeedsOverlayCreation = true;
+        if (DEBUG) {
+            Log.d(TAG, "Fetched overlays. Accent: " + mSecondaryOverlay
+                    + ", Neutral: " + mNeutralOverlay + ", Dynamic: " + mDynamicOverlay);
+         }
+      }
+      updateThemeOverlays();
     }
 
     /**
@@ -1009,105 +1003,84 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
     }
 
     private void updateThemeOverlays() {
-        final int currentUser = mUserTracker.getUserId();
-        final String overlayPackageJson = mSecureSettings.getStringForUser(
-                Settings.Secure.THEME_CUSTOMIZATION_OVERLAY_PACKAGES,
-                currentUser);
-        if (DEBUG) Log.d(TAG, "updateThemeOverlays. Setting: " + overlayPackageJson);
-        final Map<String, OverlayIdentifier> categoryToPackage = new ArrayMap<>();
-        if (!TextUtils.isEmpty(overlayPackageJson)) {
-            try {
-                JSONObject object = new JSONObject(overlayPackageJson);
-                for (String category : ThemeOverlayApplier.THEME_CATEGORIES) {
-                    if (object.has(category)) {
-                        OverlayIdentifier identifier =
-                                new OverlayIdentifier(object.getString(category));
-                        categoryToPackage.put(category, identifier);
-                    }
+    	final int currentUser = mUserTracker.getUserId();
+    	final String overlayPackageJson = mSecureSettings.getStringForUser(
+    	        Settings.Secure.THEME_CUSTOMIZATION_OVERLAY_PACKAGES,
+    	        currentUser);
+    	if (DEBUG) {
+    	    Log.d(TAG, String.format("updateThemeOverlays. Setting: %s", overlayPackageJson));
+    }
+    final Map<String, OverlayIdentifier> categoryToPackage = new ArrayMap<>();
+    if (!TextUtils.isEmpty(overlayPackageJson)) {
+        try {
+            JSONObject object = new JSONObject(overlayPackageJson);
+            for (String category : ThemeOverlayApplier.THEME_CATEGORIES) {
+                if (object.has(category)) {
+                    categoryToPackage.put(category, new OverlayIdentifier(object.getString(category)));
                 }
-            } catch (JSONException e) {
-                Log.i(TAG, "Failed to parse THEME_CUSTOMIZATION_OVERLAY_PACKAGES.", e);
             }
+        } catch (JSONException e) {
+            Log.i(TAG, "Failed to parse THEME_CUSTOMIZATION_OVERLAY_PACKAGES.", e);
         }
+    }
 
-        // Let's generate system overlay if the style picker decided to override it.
-        OverlayIdentifier systemPalette = categoryToPackage.get(OVERLAY_CATEGORY_SYSTEM_PALETTE);
-        if (mIsMonetEnabled && systemPalette != null && systemPalette.getPackageName() != null) {
-            try {
-                String colorString =  systemPalette.getPackageName().toLowerCase();
-                if (!colorString.startsWith("#")) {
-                    colorString = "#" + colorString;
-                }
-                createOverlays(Color.parseColor(colorString));
-                mNeedsOverlayCreation = true;
-                categoryToPackage.remove(OVERLAY_CATEGORY_SYSTEM_PALETTE);
-                categoryToPackage.remove(OVERLAY_CATEGORY_ACCENT_COLOR);
-                categoryToPackage.remove(OVERLAY_CATEGORY_DYNAMIC_COLOR);
-            } catch (Exception e) {
-                // Color.parseColor doesn't catch any exceptions from the calls it makes
-                Log.w(TAG, "Invalid color definition: " + systemPalette.getPackageName(), e);
+    final WallpaperColors currentColors = mCurrentColors.get(currentUser);
+    final int uiMode = mContext.getResources().getConfiguration().uiMode;
+    final boolean nightMode = (uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+    final boolean isBlackTheme = mSecureSettings.getInt(Settings.Secure.SYSTEM_BLACK_THEME, 0) == 1 && nightMode;
+
+    final OverlayIdentifier systemPalette = categoryToPackage.remove(OVERLAY_CATEGORY_SYSTEM_PALETTE);
+    if (mIsMonetEnabled && systemPalette != null) {
+        try {
+            String colorString = systemPalette.getPackageName().toLowerCase();
+            if (!colorString.startsWith("#")) {
+                colorString = "#" + colorString;
             }
-        } else if (!mIsMonetEnabled && systemPalette != null) {
-            try {
-                // It's possible that we flipped the flag off and still have a @ColorInt in the
-                // setting. We need to sanitize the input, otherwise the overlay transaction will
-                // fail.
-                categoryToPackage.remove(OVERLAY_CATEGORY_SYSTEM_PALETTE);
-                categoryToPackage.remove(OVERLAY_CATEGORY_ACCENT_COLOR);
-                categoryToPackage.remove(OVERLAY_CATEGORY_DYNAMIC_COLOR);
-                categoryToPackage.remove(OVERLAY_CATEGORY_BG_COLOR);
-            } catch (NumberFormatException e) {
-                // This is a package name. All good, let's continue
-            }
+            createOverlays(Color.parseColor(colorString));
+            mNeedsOverlayCreation = true;
+            categoryToPackage.remove(OVERLAY_CATEGORY_ACCENT_COLOR);
+            categoryToPackage.remove(OVERLAY_CATEGORY_DYNAMIC_COLOR);
+        } catch (IllegalArgumentException e) {
+            Log.w(TAG, String.format("Invalid color definition: %s", systemPalette.getPackageName()), e);
         }
+    }
 
-        // Compatibility with legacy themes, where full packages were defined, instead of just
-        // colors.
-        if (!categoryToPackage.containsKey(OVERLAY_CATEGORY_SYSTEM_PALETTE)
-                && mNeutralOverlay != null) {
-            categoryToPackage.put(OVERLAY_CATEGORY_SYSTEM_PALETTE,
-                    mNeutralOverlay.getIdentifier());
+    if (!mIsMonetEnabled && systemPalette != null) {
+        categoryToPackage.remove(OVERLAY_CATEGORY_ACCENT_COLOR);
+        categoryToPackage.remove(OVERLAY_CATEGORY_DYNAMIC_COLOR);
+    }
+
+    if (mNeutralOverlay != null && !categoryToPackage.containsKey(OVERLAY_CATEGORY_SYSTEM_PALETTE)) {
+        categoryToPackage.put(OVERLAY_CATEGORY_SYSTEM_PALETTE, mNeutralOverlay.getIdentifier());
+    }
+    if (mSecondaryOverlay != null && !categoryToPackage.containsKey(OVERLAY_CATEGORY_ACCENT_COLOR)) {
+        categoryToPackage.put(OVERLAY_CATEGORY_ACCENT_COLOR, mSecondaryOverlay.getIdentifier());
+    }
+    if (mDynamicOverlay != null && !categoryToPackage.containsKey(OVERLAY_CATEGORY_DYNAMIC_COLOR)) {
+        categoryToPackage.put(OVERLAY_CATEGORY_DYNAMIC_COLOR, mDynamicOverlay.getIdentifier());
+    }
+
+    final Set<UserHandle> managedProfiles = new HashSet<>();
+    for (UserInfo userInfo : mUserManager.getEnabledProfiles(currentUser)) {
+        if (userInfo.isManagedProfile()) {
+            managedProfiles.add(userInfo.getUserHandle());
         }
-        if (!categoryToPackage.containsKey(OVERLAY_CATEGORY_ACCENT_COLOR)
-                && mSecondaryOverlay != null) {
-            categoryToPackage.put(OVERLAY_CATEGORY_ACCENT_COLOR, mSecondaryOverlay.getIdentifier());
-        }
-        if (!categoryToPackage.containsKey(OVERLAY_CATEGORY_DYNAMIC_COLOR)
-                && mDynamicOverlay != null) {
-            categoryToPackage.put(OVERLAY_CATEGORY_DYNAMIC_COLOR, mDynamicOverlay.getIdentifier());
-        }
+    }
 
-        Set<UserHandle> managedProfiles = new HashSet<>();
-        for (UserInfo userInfo : mUserManager.getEnabledProfiles(currentUser)) {
-            if (userInfo.isManagedProfile()) {
-                managedProfiles.add(userInfo.getUserHandle());
-            }
-        }
+    if (DEBUG) {
+        Log.d(TAG, String.format("Applying overlays: %s",
+                categoryToPackage.entrySet().stream()
+                        .map(entry -> entry.getKey() + " -> " + entry.getValue())
+                        .collect(Collectors.joining(", "))));
+    }
 
-        if (DEBUG) {
-            Log.d(TAG, "Applying overlays: " + categoryToPackage.keySet().stream()
-                    .map(key -> key + " -> " + categoryToPackage.get(key)).collect(
-                            Collectors.joining(", ")));
-        }
+    mThemeManager.setIsBlackTheme(isBlackTheme);
 
-        boolean nightMode = (mContext.getResources().getConfiguration().uiMode
-                & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
-        boolean isBlackTheme = mSecureSettings.getInt(Settings.Secure.SYSTEM_BLACK_THEME, 0) == 1
-                                && nightMode;
+    mThemeManager.applyCurrentUserOverlays(categoryToPackage, new FabricatedOverlay[]{
+            mSecondaryOverlay, mNeutralOverlay, mDynamicOverlay
+    }, currentUser, managedProfiles);
 
-        mThemeManager.setIsBlackTheme(isBlackTheme);
-
-        if (mNeedsOverlayCreation) {
-            mNeedsOverlayCreation = false;
-            mThemeManager.applyCurrentUserOverlays(categoryToPackage, new FabricatedOverlay[]{
-                    mSecondaryOverlay, mNeutralOverlay, mDynamicOverlay
-            }, currentUser, managedProfiles);
-        } else {
-            mThemeManager.applyCurrentUserOverlays(categoryToPackage, null, currentUser,
-                    managedProfiles);
-        }
-
-        mThemeManager.applyBlackTheme(isBlackTheme);
+    	mThemeManager.applyBlackTheme(isBlackTheme);
     }
 
     private Style fetchThemeStyleFromSetting() {
