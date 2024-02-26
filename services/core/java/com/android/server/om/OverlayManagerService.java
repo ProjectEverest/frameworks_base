@@ -281,11 +281,14 @@ public final class OverlayManagerService extends SystemService {
             packageMonitorThread.start();
             mPackageMonitor.register(context, packageMonitorThread.getLooper(), true);
 
+            HandlerThread userReceiverThread = new HandlerThread(TAG + "_User");
+            userReceiverThread.start();
+
             final IntentFilter userFilter = new IntentFilter();
             userFilter.addAction(ACTION_USER_ADDED);
             userFilter.addAction(ACTION_USER_REMOVED);
             getContext().registerReceiverAsUser(new UserReceiver(), UserHandle.ALL,
-                    userFilter, null, null);
+                    userFilter, null, userReceiverThread.getThreadHandler());
 
             restoreSettings();
 
