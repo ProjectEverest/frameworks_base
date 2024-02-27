@@ -116,6 +116,7 @@ public class PixelPropsUtils {
                 "com.microsoft.android.smsorganizer",
                 "com.nothing.smartcenter",
                 "com.nhs.online.nhsonline",
+                "com.realme.link",
                 "com.amazon.avod.thirdpartyclient",
                 "com.disney.disneyplus",
                 "com.netflix.mediaclient",
