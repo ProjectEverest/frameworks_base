@@ -324,6 +324,7 @@ public:
             return 1; // keep the callback
         }
 
+#if 0
         constexpr int kBufferSize = 100;
         DisplayEventReceiver::Event buffer[kBufferSize];
         ssize_t numEvents;
@@ -357,6 +358,7 @@ public:
                 }
             }
         } while (numEvents > 0);
+#endif
 
         return 1;  // keep the callback
     }
