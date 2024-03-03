@@ -209,11 +209,15 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     private static final int STREAM_APP = AudioSystem.getNumStreamTypes();
 
     // Drawable color when the app is muted
+    private static final ColorMatrixColorFilter COLORED_FILTER;
     private static final ColorMatrixColorFilter MONOCHROME_COLOR_FILTER;
     static {
-        ColorMatrix matrix = new ColorMatrix();
-        matrix.setSaturation(0);
-        MONOCHROME_COLOR_FILTER = new ColorMatrixColorFilter(matrix);
+        ColorMatrix colored = new ColorMatrix();
+        ColorMatrix monochrome = new ColorMatrix();
+        colored.setSaturation(1);
+        monochrome.setSaturation(0);
+        COLORED_FILTER = new ColorMatrixColorFilter(colored);
+        MONOCHROME_COLOR_FILTER = new ColorMatrixColorFilter(monochrome);
     }
 
     /**
@@ -993,6 +997,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         ApplicationInfo appInfo;
         PackageManager pm = mContext.getPackageManager();
         String packageName = av.getPackageName();
+        final float vol = Math.round(av.getVolume() * 100f) * 0.01f;
         if (D.BUG) Slog.d(TAG, "Adding row for app " + av.getPackageName());
         try {
             appInfo = pm.getApplicationInfo(packageName, 0);
@@ -1010,7 +1015,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         row.appIcon = appIcon;
         initRow(row, STREAM_APP, /*iconRes*/ 0, /*iconMuteRes*/ 0,
                 /*important*/ false, /*defaultStream*/ false);
-        Util.setText(row.header, row.appLabel);
+        Util.setText(row.header, String.valueOf(Math.round(vol * 100)) + "%");
         row.slider.setContentDescription(row.appLabel);
         row.slider.setEnabled(true);
         row.slider.setMin(0);
@@ -1086,11 +1091,13 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         row.iconMuteRes = iconMuteRes;
         row.important = important;
         row.defaultStream = defaultStream;
+        boolean isSlimSlider = true;
         if (customVolumeStyles == 1) {
            row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row_rui, null);
         } else if (customVolumeStyles == 2) {
            row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row, null);
         } else {
+            isSlimSlider = false;
             row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row_aosp, null);
         }
         row.view.setId(row.stream);
@@ -1130,7 +1137,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 R.id.volume_seekbar_progress_solid);
         row.sliderProgressSolidBg = seekbarDrawable.findDrawableByLayerId(android.R.id.background);
 
-        if (row.isAppVolume) {
+        if (row.isAppVolume && !isSlimSlider) {
             final RotateDrawable appIconR = new RotateDrawable();
             appIconR.setDrawable(row.appIcon);
             // matches drawable/volume_row_seekbar_progress.xml
@@ -1141,8 +1148,12 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         } else {
             final Drawable sliderProgressIcon = seekbarProgressDrawable.findDrawableByLayerId(
                     R.id.volume_seekbar_progress_icon);
-            row.sliderProgressIcon = sliderProgressIcon != null ? (AlphaTintDrawableWrapper)
-                    ((RotateDrawable) sliderProgressIcon).getDrawable() : null;
+            if (sliderProgressIcon instanceof RotateDrawable && 
+                ((RotateDrawable) sliderProgressIcon).getDrawable() instanceof AlphaTintDrawableWrapper) {
+                row.sliderProgressIcon = (AlphaTintDrawableWrapper) ((RotateDrawable) sliderProgressIcon).getDrawable();
+            } else {
+                row.sliderProgressIcon = null;
+            }
         }
 
         row.slider.setProgressDrawable(seekbarDrawable);
@@ -1583,6 +1594,23 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         });
         mAppVolumeIcon.setClipToOutline(true);
     }
+    
+    private void setupAppVolumeRowIcon(VolumeRow row) {
+        Drawable icon = row.appIcon;
+        if (icon == null) return;
+        row.icon.setImageTintList(null);
+        row.icon.setImageDrawable(icon);
+        row.icon.getLayoutParams().height = mTargetTapSize;
+        row.icon.getLayoutParams().width = mTargetTapSize;
+        row.icon.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        row.icon.setOutlineProvider(new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), mDialogCornerRadius);
+            }
+        });
+        row.icon.setClipToOutline(true);
+    }
 
     private void clearAppVolumes() {
         mAppVolumeView.setVisibility(GONE);
@@ -1602,6 +1630,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             AudioManager audioManager = mController.getAudioManager();
             for (AppVolume av : audioManager.listAppVolumes()) {
                 if (av.isActive()) {
+                    addAppRow(av);
                     showActiveMedia = true;
                     mAppVolumeActivePackageName = av.getPackageName();
                     break;
@@ -2680,11 +2709,9 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         }
 
         // update icon
-        if (row.slider.getProgress() == 0 || row.appVolume.isMuted()) {
-            row.appIcon.setColorFilter(MONOCHROME_COLOR_FILTER);
-        } else {
-            row.appIcon.clearColorFilter();
-        }
+        final boolean isRowMuted = row.slider.getProgress() == 0 || row.appVolume.isMuted();
+        row.appIcon.setColorFilter(isRowMuted ? MONOCHROME_COLOR_FILTER : COLORED_FILTER);
+        setupAppVolumeRowIcon(row);
     }
 
     private void updateAppVolumeRows() {
@@ -2722,13 +2749,15 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         row.sliderProgressSolidBg.setAlpha(useActiveColoring
                 ? Color.alpha(colorTint.getDefaultColor())
                 : (int) (0.02 * 255));
-        if (row.sliderProgressIcon != null) {
+        if (row.sliderProgressIcon != null && !row.isAppVolume) {
             row.sliderProgressIcon.setTintList(bgTint);
         }
 
         if (row.icon != null) {
-            row.icon.setImageTintList(colorAccent);
-            row.icon.setImageAlpha(alpha);
+            if (!row.isAppVolume) {
+                row.icon.setImageTintList(colorAccent);
+                row.icon.setImageAlpha(alpha);
+            }
             row.header.setTextColor(colorTint);
             row.header.setAlpha(alpha);
         }
@@ -3236,6 +3265,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 final float vol = progress * 0.01f;
                 if (D.BUG) Log.d(TAG, "set app " + mRow.packageName + " volume to " + vol);
                 mController.getAudioManager().setAppVolume(mRow.packageName, vol);
+                Util.setText(mRow.header, String.valueOf(Math.round(vol * 100)) + "%");
                 updateAppVolumeRows();
                 return;
             }
@@ -3376,6 +3406,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         private Drawable appIcon;
 
         void setIcon(int iconRes, Resources.Theme theme) {
+            if (iconRes == 0) return;
             if (icon != null) {
                 icon.setImageResource(iconRes);
             }
