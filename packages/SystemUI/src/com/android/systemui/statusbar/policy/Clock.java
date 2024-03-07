@@ -153,7 +153,7 @@ public class Clock extends TextView implements
     public static final int FONT_NOTOSERIF_BOLD_ITALIC = 24;
     public int DEFAULT_CLOCK_COLOR = 0xffffffff;
     public boolean mCustomClockColor = false;
-    public int mClockColor = 0xffffffff;
+    public int mClockColor = DEFAULT_CLOCK_COLOR;
     private final CommandQueue mCommandQueue;
     private int mCurrentUserId;
 
@@ -605,15 +605,7 @@ public class Clock extends TextView implements
     @Override
     public void onDarkChanged(ArrayList<Rect> areas, float darkIntensity, int tint) {
         mNonAdaptedColor = DarkIconDispatcher.getTint(areas, this, tint);
-    if (mCustomClockColor == true) {
-        if (mClockColor == 0xFFFFFFFF) {
-            setTextColor(mNonAdaptedColor);
-        } else {
-            setTextColor(mClockColor);
-        }
-     }  else {
-        setTextColor(mNonAdaptedColor);
-        }  
+        updateClockColor(); 
      }
 
     // Update text color based when shade scrim changes color.
@@ -901,17 +893,15 @@ public class Clock extends TextView implements
     }
 
     public void updateClockColor() {
-    if (mCustomClockColor == true)   {
-        if (mClockColor == 0xFFFFFFFF) {
-            setTextColor(mNonAdaptedColor);
-        } else {
-            setTextColor(mClockColor);
-        }
-     }  else{
-        setTextColor(mNonAdaptedColor);
-        }
-       updateClock();
-     }
+    	int textColor;
+    	if (mCustomClockColor) {
+    	    textColor = (mClockColor == 0xFFFFFFFF) ? mNonAdaptedColor : mClockColor;
+    	} else {
+    	    textColor = mNonAdaptedColor;
+    	}
+    	setTextColor(textColor);
+    updateClock();
+    }
 
     private void updateClockFontStyle() {
         getClockFontStyle(mClockFontStyle);

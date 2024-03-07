@@ -606,15 +606,16 @@ constructor(
             textColorPrimary = textColor
             if (iconManager != null) {
                 iconManager.setTint(textColor)
-            }
-            clock.setTextColor(textColorPrimary)
+            }            
             date.setTextColor(textColorPrimary)
             mShadeCarrierGroup.updateColors(textColorPrimary, colorStateList)
             batteryIcon.updateColors(textColorPrimary, textColorSecondary, textColorPrimary)
             clock.updateClockSize()
-            if (clock.mCustomClockColor == true) {
+            if (clock.mCustomClockColor) {
                   clock.updateClockColor()
-             }     
+            } else {
+            	  clock.setTextColor(textColorPrimary)
+            }	      
         }
     }
 
