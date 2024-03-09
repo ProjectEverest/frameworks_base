@@ -6318,6 +6318,12 @@ public final class Settings {
         public static final String NETWORK_TRAFFIC_UNIT_TYPE = "network_traffic_unit_type";
 
         /**
+         * Up/Down indicator preference for network traffic
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_DRAWABLE = "network_traffic_drawable";
+
+        /**
          * Whether to play notification sound and vibration if screen is ON
          * 0 - never
          * 1 - always

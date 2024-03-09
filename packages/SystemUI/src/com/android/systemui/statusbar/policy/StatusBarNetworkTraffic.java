@@ -77,6 +77,8 @@ public class StatusBarNetworkTraffic extends TextView implements DarkReceiver,
             "customsystem:" + Settings.System.NETWORK_TRAFFIC_AUTOHIDE;
     private static final String NETWORK_TRAFFIC_UNIT_TYPE =
             "customsystem:" + Settings.System.NETWORK_TRAFFIC_UNIT_TYPE;
+    private static final String NETWORK_TRAFFIC_DRAWABLE =
+            "customsystem:" + Settings.System.NETWORK_TRAFFIC_DRAWABLE;
 
     private static final long AUTOHIDE_THRESHOLD = 10 * Kilo;
 
@@ -91,6 +93,7 @@ public class StatusBarNetworkTraffic extends TextView implements DarkReceiver,
     private boolean mVisible = true;
     private boolean mEnabled = false;
     private boolean mConnectionAvailable = true;
+    private boolean mDrawableEnabled = false;
 
     private int mSubMode = MODE_UPSTREAM_AND_DOWNSTREAM;
     private boolean mTrafficActive;
@@ -154,6 +157,7 @@ public class StatusBarNetworkTraffic extends TextView implements DarkReceiver,
             tunerService.addTunable(this, NETWORK_TRAFFIC_ENABLED);
             tunerService.addTunable(this, NETWORK_TRAFFIC_AUTOHIDE);
             tunerService.addTunable(this, NETWORK_TRAFFIC_UNIT_TYPE);
+            tunerService.addTunable(this, NETWORK_TRAFFIC_DRAWABLE);
 
             updateViews();
             setTrafficDrawable();
@@ -343,6 +347,11 @@ public class StatusBarNetworkTraffic extends TextView implements DarkReceiver,
                         TunerService.parseInteger(newValue, 0);
                 updateViews();
                 break;
+            case NETWORK_TRAFFIC_DRAWABLE:
+            	mDrawableEnabled = 
+            	        TunerService.parseIntegerSwitch(newValue, false);
+                updateViews();
+                break;
             default:
                 break;
         }
@@ -363,6 +372,7 @@ public class StatusBarNetworkTraffic extends TextView implements DarkReceiver,
     private void updateViews() {
         if (mEnabled) {
             updateViewState();
+            setTrafficDrawable();
         }
     }
 
@@ -377,10 +387,15 @@ public class StatusBarNetworkTraffic extends TextView implements DarkReceiver,
     }
 
     private void setTrafficDrawable() {
-        final int drawableResId;
-        final Drawable drawable;
+    
+    if (!mDrawableEnabled) {
+        setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+        return;
+    }
+    final int drawableResId;
+    final Drawable drawable;
 
-        if (!mTrafficActive) {
+    if (!mTrafficActive) {
             drawableResId = R.drawable.stat_sys_network_traffic;
         } else if (mSubMode == MODE_UPSTREAM_ONLY) {
             drawableResId = R.drawable.stat_sys_network_traffic_up;
@@ -388,13 +403,16 @@ public class StatusBarNetworkTraffic extends TextView implements DarkReceiver,
             drawableResId = R.drawable.stat_sys_network_traffic_down;
         } else {
             drawableResId = R.drawable.stat_sys_network_traffic_updown;
-        }
+    }
+        
+    if (getResources() != null) {    
         drawable = drawableResId != 0 ? getResources().getDrawable(drawableResId) : null;
         if (mDrawable != drawable || mIconTint != newTint) {
             mDrawable = drawable;
             mIconTint = newTint;
             setCompoundDrawablesWithIntrinsicBounds(null, null, mDrawable, null);
             updateTrafficDrawable();
+            }
         }
     }
 
