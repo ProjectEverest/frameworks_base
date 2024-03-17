@@ -6451,26 +6451,11 @@ public final class Settings {
         @Readable
         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
 
-        /**
-         * Whether the phone vibrates on call connect
-         * @hide
-         */
-        @Readable
-        public static final String VIBRATE_ON_CONNECT = "vibrate_on_connect";
-
-         /**
-         * Whether the phone vibrates on call waiting
-         * @hide
-         */
-        @Readable
-        public static final String VIBRATE_ON_CALLWAITING = "vibrate_on_callwaiting";
-
-         /**
-         * Whether the phone vibrates on disconnect
-         * @hide
-         */
-        @Readable
-        public static final String VIBRATE_ON_DISCONNECT = "vibrate_on_disconnect";
+       /**
+        * Whether to enable or disable vibration during calls
+        * @hide
+        */
+        public static final String INCALL_FEEDBACK_VIBRATE = "incall_feeedback_vibrate";
 
          /**
          * Volume rocker wake
@@ -7471,9 +7456,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AUTO_BRIGHTNESS_ONE_SHOT);
             PRIVATE_SETTINGS.add(LOCKSCREEN_PIN_SCRAMBLE_LAYOUT);
             PRIVATE_SETTINGS.add(AMBIENT_WAKE_GESTURES);
-            PRIVATE_SETTINGS.add(VIBRATE_ON_CONNECT);
-            PRIVATE_SETTINGS.add(VIBRATE_ON_CALLWAITING);
-            PRIVATE_SETTINGS.add(VIBRATE_ON_DISCONNECT);
+            PRIVATE_SETTINGS.add(INCALL_FEEDBACK_VIBRATE);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_POSITION);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_STYLE);
