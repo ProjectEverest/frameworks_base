@@ -1287,8 +1287,9 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver ,Tune
                                     || mBatteryStyle == BATTERY_STYLE_TEXT
                                     || mShowPercentMode == MODE_ON;
         showPercent = showPercent && !mBatteryStateUnknown
-                                    && mBatteryStyle != BATTERY_STYLE_HIDDEN;
-                                    
+                                    && mBatteryStyle != BATTERY_STYLE_HIDDEN
+                                    && mBatteryStyle != BATTERY_STYLE_LANDSCAPEN;
+
         mThemedDrawable.setShowPercent(drawPercentInside);
         mLandscapeBatteryA.setShowPercent(drawPercentInside);
         mLandscapeBatteryB.setShowPercent(drawPercentInside);
