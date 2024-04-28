@@ -7092,6 +7092,12 @@ public final class Settings {
         }
 
         /**
+         * Enable/Disable face lockout
+         * @hide
+         */
+        public static final String FACE_LOCKOUT = "face_lockout";
+
+        /**
          * When to use Wi-Fi calling
          *
          * @see android.telephony.TelephonyManager.WifiCallingChoices
