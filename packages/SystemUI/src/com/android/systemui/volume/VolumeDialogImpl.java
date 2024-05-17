@@ -369,6 +369,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
 
     private VolumeUtils mVolumeUtils;
     private boolean mShowMediaButton = true;
+    private boolean mShowVolumePercent = true;
 
     public VolumeDialogImpl(
             Context context,
@@ -475,6 +476,17 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 Settings.Secure.getUriFor("volume_show_media_button"),
                 false, volumeMediaButtonObserver);
         volumeMediaButtonObserver.onChange(true);
+        ContentObserver volumePercentObserver = new ContentObserver(null) {
+            @Override
+            public void onChange(boolean selfChange) {
+                mShowVolumePercent = mSecureSettings.get().getInt(
+                        "volume_show_volume_percent", 1) != 0;
+            }
+        };
+        mContext.getContentResolver().registerContentObserver(
+                Settings.Secure.getUriFor("volume_show_volume_percent"),
+                false, volumePercentObserver);
+        volumePercentObserver.onChange(true);
 
         initDimens();
 
@@ -2320,10 +2332,10 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                         mRingerIcon.setTag(Events.ICON_STATE_UNMUTE);
                         final VolumeRow ringer = findRow(STREAM_RING);
                         final VolumeRow notif = findRow(STREAM_NOTIFICATION);
-                        if (ringer != null) {
+                        if (ringer != null && ringer.header.getVisibility() == View.VISIBLE) {
                             Util.setText(ringer.header, Utils.formatPercentage(ss.level, ss.levelMax));
                         }
-                        if (notif != null) {
+                        if (notif != null && notif.header.getVisibility() == View.VISIBLE) {
                             Util.setText(notif.header, Utils.formatPercentage(notif.ss.level, notif.ss.levelMax));
                         }
                     }
@@ -2343,8 +2355,10 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             } else {
                 ringer.slider.setProgress(ringerLevel);
             }
-            Util.setText(ringer.header, Utils.formatPercentage(ringer.ss.levelMin,
-                    ringer.ss.levelMax));
+            if (ringer.header.getVisibility() == View.VISIBLE) {
+                Util.setText(ringer.header, Utils.formatPercentage(ringer.ss.levelMin,
+                        ringer.ss.levelMax));
+            }
         }
         if (notif != null && notif.ss.muted) {
             final int notifLevel = notif.ss.levelMin * 100;
@@ -2353,8 +2367,10 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             } else {
                 notif.slider.setProgress(notifLevel);
             }
-            Util.setText(notif.header, Utils.formatPercentage(notif.ss.levelMin,
-                    notif.ss.levelMax));
+            if (notif.header.getVisibility() == View.VISIBLE) {
+                Util.setText(notif.header, Utils.formatPercentage(notif.ss.levelMin,
+                        notif.ss.levelMax));
+            }
         }
     }
 
@@ -2716,9 +2732,12 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 row.slider.setProgress(newProgress, true);
             }
         }
-        // update header text
-        Util.setText(row.header, Utils.formatPercentage((enable && !row.ss.muted)
-                        ? vlevel : 0, row.ss.levelMax));
+        row.header.setVisibility(mShowVolumePercent ? View.VISIBLE : View.GONE);
+        if (row.header.getVisibility() == View.VISIBLE) {
+            // update header text
+            Util.setText(row.header, Utils.formatPercentage((enable && !row.ss.muted)
+                            ? vlevel : 0, row.ss.levelMax));
+        }
     }
 
     private void recheckH(VolumeRow row) {
@@ -3169,13 +3188,17 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             if ((mRow.stream == STREAM_RING || mRow.stream == STREAM_NOTIFICATION)) {
                 if (mRow.ss.level > mRow.ss.levelMin && userLevel == 0) {
                     seekBar.setProgress((mRow.ss.levelMin + 1) * 100);
-                    Util.setText(mRow.header,
-                            Utils.formatPercentage(mRow.ss.levelMin + 1, mRow.ss.levelMax));
+                    if (mRow.header.getVisibility() == View.VISIBLE) {
+                        Util.setText(mRow.header,
+                                Utils.formatPercentage(mRow.ss.levelMin + 1, mRow.ss.levelMax));
+                    }
                     return;
                 }
             }
 
-            Util.setText(mRow.header, Utils.formatPercentage(userLevel, mRow.ss.levelMax));
+            if (mRow.header.getVisibility() == View.VISIBLE) {
+                Util.setText(mRow.header, Utils.formatPercentage(userLevel, mRow.ss.levelMax));
+            }
 
             if (mRow.ss.level != userLevel || mRow.ss.muted && userLevel > 0) {
                 mRow.userAttempt = SystemClock.uptimeMillis();
