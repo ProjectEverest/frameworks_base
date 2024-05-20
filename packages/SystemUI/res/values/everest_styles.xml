@@ -12,4 +12,11 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:alpha">@null</item>
     </style>
+
+    <!-- Data usage -->
+    <style name="TextAppearance.QS.Status.DataUsage">
+        <item name="android:textColor">?attr/onSurfaceVariant</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
+    </style>
 </resources>
