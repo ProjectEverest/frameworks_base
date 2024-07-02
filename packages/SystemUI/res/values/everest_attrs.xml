@@ -17,4 +17,7 @@
         <item>@string/quick_settings_compass_NW</item> <!-- North west -->
     </string-array>
 
+    <declare-styleable name="WeatherTextView">
+        <attr name="weatherText" format="string" />
+    </declare-styleable>
 </resources>
