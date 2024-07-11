@@ -71,6 +71,7 @@ import android.os.PowerManager;
 import android.os.PowerManagerInternal;
 import android.os.Trace;
 import android.os.UserManager;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.IndentingPrintWriter;
 import android.util.Log;
@@ -299,6 +300,8 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             "system:" + Settings.System.ISLAND_NOTIFICATION;
     private static final String HEADS_UP_NOTIFICATIONS_ENABLED =
             "global:" + Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED;
+    private static final String QS_HAPTICS_INTENSITY =
+            "system:" + "qs_haptics_intensity";
 
     private static final Rect M_DUMMY_DIRTY_RECT = new Rect(0, 0, 1, 1);
     private static final Rect EMPTY_RECT = new Rect();
@@ -654,6 +657,8 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private NotificationStackScrollLayout mNotificationStackScroller;
     private boolean mUseIslandNotification;
     private boolean mUseHeadsUp;
+    
+    private int mQsHapticsIntensity;
 
     private final PowerManagerInternal mLocalPowerManager;
 
@@ -3836,7 +3841,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private void maybeVibrateOnOpening(boolean openingWithTouch) {
         if (mVibrateOnOpening && mBarState != KEYGUARD && mBarState != SHADE_LOCKED) {
             if (!openingWithTouch || !mHasVibratedOnOpen) {
-                VibrationUtils.triggerVibration(mView.getContext(), 2);
+                VibrationUtils.triggerVibration(mView.getContext(), mQsHapticsIntensity);
                 mHasVibratedOnOpen = true;
                 mShadeLog.v("Vibrating on opening, mHasVibratedOnOpen=true");
             }
@@ -4739,6 +4744,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             mTunerService.addTunable(this, NOTIFICATION_MATERIAL_DISMISS);
             mTunerService.addTunable(this, ISLAND_NOTIFICATION);
             mTunerService.addTunable(this, HEADS_UP_NOTIFICATIONS_ENABLED);
+            mTunerService.addTunable(this, QS_HAPTICS_INTENSITY);
             // Theme might have changed between inflating this view and attaching it to the
             // window, so
             // force a call to onThemeChanged
@@ -4786,6 +4792,9 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                 case HEADS_UP_NOTIFICATIONS_ENABLED:
                     mUseHeadsUp = TunerService.parseIntegerSwitch(newValue, true);
                     mNotifIsland.setIslandEnabled(mUseIslandNotification && mUseHeadsUp);
+                    break;
+                case QS_HAPTICS_INTENSITY:
+                    mQsHapticsIntensity = TunerService.parseInteger(newValue, 1);
                     break;
                 default:
                     break;
