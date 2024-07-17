@@ -7191,6 +7191,12 @@ public final class Settings {
         };
 
         /**
+         * Whether to enable qs split shade in landscape mode
+         * @hide
+         */
+        public static final String QS_SPLIT_SHADE = "qs_split_shade";
+
+        /**
          * These are all public system settings
          *
          * @hide
