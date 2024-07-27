@@ -5,6 +5,9 @@
 -->
 <resources>
 
+    <!-- Custom AOD image -->  
+    <dimen name="custom_aod_image_size">180dp</dimen>
+
     <!-- Volume app icon -->  
     <dimen name="volume_app_icon_max_size">108dp</dimen>
 
