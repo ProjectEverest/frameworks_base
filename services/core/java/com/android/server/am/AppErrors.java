@@ -46,7 +46,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.Process;
 import android.os.SystemClock;
-import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.ArrayMap;
@@ -657,17 +656,6 @@ class AppErrors {
             if (!mService.mBooting && !mService.mBooted) {
                 return;
             }
-
-            // Add paste content for Memochō option
-            String devFP = SystemProperties.get("ro.vendor.build.fingerprint", "");
-            String everestVers = SystemProperties.get("ro.everest.version", "");
-            String boardName = SystemProperties.get("ro.product.board", "");
-            data.paste = "time: " + timeMillis + "\n" +
-            "device fp:" + devFP + "\n" +
-            "product board:" + boardName + "\n" +
-            "everest vers:" + everestVers + "\n" +
-            "msg: " + longMsg + "\n" +
-            "stacktrace: " + stackTrace;
 
             final Message msg = Message.obtain();
             msg.what = ActivityManagerService.SHOW_ERROR_UI_MSG;
