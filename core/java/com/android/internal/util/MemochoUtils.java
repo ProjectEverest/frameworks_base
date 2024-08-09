@@ -26,17 +26,17 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Helper functions for uploading to MkrBin (https://bin.mkr.pw/).
+ * Helper functions for uploading to Memochō (https://bin.kv2.dev/).
  */
-public final class MkrBinUtils {
+public final class MemochoUtils {
 
-    private static final String binUrl = "https://bin.mkr.pw";
+    private static final String binUrl = "https://bin.kv2.dev";
     private static Handler mHandler;
 
     /**
-     * Uploads {@code content} to MkrBin
+     * Uploads {@code content} to Memochō
      *
-     * @param content  the content to upload to MkrBin
+     * @param content  the content to upload to Memochō
      * @param callback the callback to call on success / failure
      */
     public static void upload(String content, UploadResultCallback callback) {
@@ -61,12 +61,12 @@ public final class MkrBinUtils {
                 if (!urlPath.isEmpty()) {
                     callback.onSuccess(binUrl + urlPath);
                 } else {
-                    String msg = "Failed to upload to MkrBin: No id retrieved";
+                    String msg = "Failed to upload to Memochō: No id retrieved";
                     callback.onFail(msg, new Exception(msg));
                 }
                 urlConnection.disconnect();
             } catch (Exception e) {
-                String msg = "Failed to upload to MkrBin";
+                String msg = "Failed to upload to Memochō";
                 callback.onFail(msg, e);
             }
         });
@@ -74,11 +74,11 @@ public final class MkrBinUtils {
 
     private static Handler getHandler() {
         if (mHandler == null) {
-            HandlerThread mkrBinThread = new HandlerThread("MkrBinThread");
-            if (!mkrBinThread.isAlive()) {
-                mkrBinThread.start();
+            HandlerThread memochoThread = new HandlerThread("MemochoThread");
+            if (!memochoThread.isAlive()) {
+                memochoThread.start();
             }
-            mHandler = new Handler(mkrBinThread.getLooper());
+            mHandler = new Handler(memochoThread.getLooper());
         }
         return mHandler;
     }
