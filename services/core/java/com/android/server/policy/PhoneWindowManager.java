@@ -3332,7 +3332,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         boolean actionsChanged = mThreeFingersSwipeAction != threeFingersSwipeAction ||
                                  mThreeFingersLongPressAction != threeFingersLongPressAction;
-                                 
+
         mShakeGestureAction = Action.fromSettings(resolver,
                 LineageSettings.System.KEY_SHAKE_GESTURE_ACTION,
                 Action.NOTHING);
@@ -3346,6 +3346,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             } else if (!shouldRegisterThreeFingersListener && mThreeFingerListenerRegistered) {
                 mWindowManagerFuncs.unregisterPointerEventListener(mThreeFingersListener, DEFAULT_DISPLAY);
                 mThreeFingerListenerRegistered = false;
+            }
+            try {
+                mActivityManagerService.setThreeFingersSwipeActive(mThreeFingerListenerRegistered);
+            } catch (Exception e) {
+                // Do nothing
             }
         }
 

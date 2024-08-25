@@ -528,8 +528,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
-import lineageos.providers.LineageSettings;
-
 public class ActivityManagerService extends IActivityManager.Stub
         implements Watchdog.Monitor, BatteryStatsImpl.BatteryCallback, ActivityManagerGlobalLock {
 
@@ -1750,6 +1748,8 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     static final HostingRecord sNullHostingRecord =
             new HostingRecord(HostingRecord.HOSTING_TYPE_EMPTY);
+
+    private boolean mThreeFingersSwipeEnabled;
 
     /**
      * Used to notify activity lifecycle events.
@@ -20909,5 +20909,10 @@ public class ActivityManagerService extends IActivityManager.Stub
         synchronized (this) {
             return SystemProperties.getBoolean("persist.sys.android.screenshot", false);
         }
+    }
+
+    @Override
+    public void setThreeFingersSwipeActive(boolean active) {
+        mThreeFingersSwipeEnabled = active;
     }
 }
