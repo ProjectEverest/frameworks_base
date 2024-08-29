@@ -30,6 +30,9 @@ public class RisingServicesStarter {
 
     private static final String CHARGING_OPT_SERVICE_CLASS =
             "org.rising.server.AdaptiveChargingService";
+            
+    private static final String STORAGE_CLEANER_SERVICE_CLASS =
+            "org.rising.server.StorageCleanerService";
 
     private static final String QUICKSWITCH_SERVICE_CLASS =
             "org.rising.server.QuickSwitchService";
@@ -43,6 +46,7 @@ public class RisingServicesStarter {
         startService(NETWORK_OPT_SERVICE_CLASS);
         startService(CHARGING_OPT_SERVICE_CLASS);
         startService(QUICKSWITCH_SERVICE_CLASS);
+        startService(STORAGE_CLEANER_SERVICE_CLASS);
     }
 
     private void startService(String serviceClassName) {
