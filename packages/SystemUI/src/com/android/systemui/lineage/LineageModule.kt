@@ -37,7 +37,7 @@ import com.android.systemui.qs.tiles.ReadingModeTile
 import com.android.systemui.qs.tiles.RefreshRateTile
 import com.android.systemui.qs.tiles.ScreenshotTile
 import com.android.systemui.qs.tiles.SmartPixelsTile
-import com.android.systemui.qs.tiles.SoundEngineTile
+import com.android.systemui.qs.tiles.SoundTile
 import com.android.systemui.qs.tiles.SoundSearchTile
 import com.android.systemui.qs.tiles.SoundTile
 import com.android.systemui.qs.tiles.SyncTile
@@ -175,11 +175,11 @@ interface LineageModule {
     @StringKey(SmartPixelsTile.TILE_SPEC)
     fun bindSmartPixelsTile(smartPixelsTile: SmartPixelsTile): QSTileImpl<*>
 
-    /** Inject SoundEngineTile into tileMap in QSModule */
+    /** Inject SoundTile into tileMap in QSModule */
     @Binds
     @IntoMap
-    @StringKey(SoundEngineTile.TILE_SPEC)
-    fun bindSoundEngineTile(soundEngineTile: SoundEngineTile): QSTileImpl<*>
+    @StringKey(SoundTile.TILE_SPEC)
+    fun bindSoundTile(soundTile: SoundTile): QSTileImpl<*>
 
     /** Inject SoundSearchTile into tileMap in QSModule */
     @Binds
