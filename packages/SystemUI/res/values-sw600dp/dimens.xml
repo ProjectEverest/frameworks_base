@@ -16,6 +16,9 @@
 */
 -->
 <resources>
+    <!-- QS Header -->
+    <dimen name="qs_header_side_offsets">-150dp</dimen>
+
     <!-- Height of the status bar header bar when on Keyguard.
          On large screens should be the same as the regular status bar. -->
     <dimen name="status_bar_header_height_keyguard">48dp</dimen>
