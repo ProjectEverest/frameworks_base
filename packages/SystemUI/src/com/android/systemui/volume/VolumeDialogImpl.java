@@ -380,7 +380,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     private final VibratorHelper mVibratorHelper;
     private final com.android.systemui.util.time.SystemClock mSystemClock;
 
-    private VolumeUtils mVolumeUtils;
+    private final VolumeUtils mVolumeUtils;
     private boolean mShowMediaButton = true;
     private boolean mShowVolumePercent = true;
 
@@ -578,6 +578,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         if (mDevicePostureController != null) {
             mDevicePostureController.removeCallback(mDevicePostureControllerCallback);
         }
+        mVolumeUtils.onDestroy();
     }
 
     @Override
